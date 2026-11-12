@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>毛孩子数字生活 · Demo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%90%BE%3C/text%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#f3ece4;font-family:-apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;display:flex;justify-content:center;padding:20px;color:#3b2f2a}
+.phone{width:390px;height:844px;background:#fff8f1;border-radius:46px;border:10px solid #2b2523;position:relative;overflow:hidden;box-shadow:0 20px 50px #0003;flex:none}
+.status{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 24px;font-size:13px;font-weight:600}
+.nav{height:44px;display:flex;align-items:center;justify-content:center;position:relative;font-weight:600;font-size:16px}
+.nav .back{position:absolute;left:14px;font-size:22px;cursor:pointer;display:none}
+.nav .capsule{position:absolute;right:10px;border:1px solid #0002;border-radius:16px;padding:3px 10px;font-size:12px;background:#fff9}
+.body{position:absolute;top:88px;bottom:78px;left:0;right:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 14px 20px}
+.tab{position:absolute;bottom:0;left:0;right:0;height:78px;background:#fff;border-top:1px solid #eee;display:flex;padding-bottom:18px}
+.tab div{flex:1;text-align:center;font-size:11px;color:#999;cursor:pointer;padding-top:8px}
+.tab div b{display:block;font-size:22px;font-weight:normal;filter:grayscale(1);opacity:.6}
+.tab div.on{color:#f08a4b}.tab div.on b{filter:none;opacity:1}
+.page{display:none}.page.on{display:block}
+.card{background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px #e8d6c533}
+h3{font-size:15px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+h3 small{font-size:12px;color:#aaa;font-weight:normal;cursor:pointer}
+.demo{background:#fff3cd;color:#8a6d1a;font-size:11px;padding:5px 10px;border-radius:8px;margin-bottom:10px;text-align:center}
+.soon{display:inline-block;background:#e9e3ff;color:#6b5bd2;font-size:10px;padding:2px 6px;border-radius:6px;margin-left:4px;font-weight:normal;vertical-align:middle}
+.row{display:flex;gap:10px;overflow-x:auto}
+.pet{min-width:92px;text-align:center;background:#fff;border-radius:16px;padding:10px 4px;cursor:pointer;box-shadow:0 2px 8px #e8d6c544}
+.av{width:58px;height:58px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:32px;overflow:hidden;background:#fff1e6}
+.av img{width:100%;height:100%;object-fit:cover}
+.pet p{font-size:13px;font-weight:600}.pet span{font-size:10px;color:#999;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+.c1{background:#ffe1c7}.c2{background:#e2e8f0}.c3{background:#ffe9a8}.c4{background:#cfeffd}.c5{background:#d7f5d0}.c6{background:#f3e0ff}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.grid div{text-align:center;font-size:11px;cursor:pointer}
+.grid div b{display:flex;width:46px;height:46px;margin:0 auto 4px;border-radius:14px;align-items:center;justify-content:center;font-size:22px;background:#fff1e6}
+.li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f4ece4;font-size:13px;cursor:pointer}
+.li:last-child{border:0}.li .t{flex:1}.li .t small{display:block;color:#aaa;font-size:11px}
+.btn{background:#f08a4b;color:#fff;border:0;border-radius:22px;padding:10px 18px;font-size:14px;cursor:pointer;width:100%;margin-top:8px}
+.btn.g{background:#07c160}.btn.o{background:#fff;color:#f08a4b;border:1px solid #f08a4b}
+.btn.d{background:#fff;color:#c4473a;border:1px solid #e8b4ad}
+.btn:disabled{opacity:.5;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.chip{padding:5px 11px;border-radius:14px;background:#f6efe8;font-size:12px;cursor:pointer}
+.chip.on{background:#f08a4b;color:#fff}
+.lab{font-size:12px;color:#888;margin-top:8px;margin-bottom:4px}
+.stickers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.st{background:#fffaf4;border:1px dashed #f3c9a8;border-radius:12px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:36px;overflow:hidden}
+.st i{font-style:normal;font-size:11px;font-weight:700;color:#5a3b2c;margin-top:2px}
+input,select,textarea{width:100%;border:1px solid #eadfd5;border-radius:10px;padding:8px;font-size:13px;background:#fffdfb;font-family:inherit;color:#3b2f2a}
+textarea{min-height:88px;resize:vertical;line-height:1.5}
+.tl{border-left:2px solid #f6c7a4;margin-left:8px;padding-left:14px}
+.tl>div{position:relative;padding-bottom:12px;font-size:13px}
+.tl>div:before{content:"";position:absolute;left:-21px;top:3px;width:10px;height:10px;border-radius:50%;background:#f08a4b}
+.tl small{color:#aaa;display:block}
+.tl .tl-photo{width:64px;height:64px;object-fit:cover;border-radius:8px;margin-top:6px;display:block}
+.feed{columns:2;column-gap:8px}
+.post{break-inside:avoid;background:#fff;border-radius:12px;margin-bottom:8px;overflow:hidden;font-size:12px}
+.post .img{display:flex;align-items:center;justify-content:center;font-size:48px}
+.post p{padding:6px 8px}.post small{display:flex;justify-content:space-between;padding:0 8px 8px;color:#aaa}
+.seg{display:flex;gap:16px;font-size:14px;margin-bottom:10px;overflow-x:auto;white-space:nowrap}
+.seg span{cursor:pointer;color:#999;padding-bottom:4px}
+.seg span.on{color:#3b2f2a;font-weight:700;border-bottom:3px solid #f08a4b}
+.warn{background:#fdecea;color:#b33a2b;font-size:12px;border-radius:10px;padding:10px;line-height:1.6;margin-bottom:10px}
+.goods{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.goods>div{background:#fff;border-radius:12px;padding:10px;font-size:12px}
+.goods b{display:block;font-size:40px;text-align:center;background:#fff4ea;border-radius:10px;margin-bottom:6px}
+.price{color:#f05a3b;font-weight:700}
+.plan{border:2px solid #eee;border-radius:14px;padding:12px;margin-bottom:8px;cursor:pointer}
+.plan.on{border-color:#f08a4b;background:#fff4ea}
+table{width:100%;font-size:12px;border-collapse:collapse}
+td,th{padding:6px 4px;border-bottom:1px solid #f1e8df;text-align:left}
+.toast{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);background:#000b;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;display:none;z-index:40;text-align:center;max-width:80%}
+.mini{font-size:12px;color:#888;line-height:1.6}
+.hero{text-align:center;padding:10px 0}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:#fff1e6;color:#d06a2c;margin:2px}
+.upload{border:2px dashed #f3c9a8;border-radius:14px;padding:22px;text-align:center;color:#c08a68;font-size:13px;cursor:pointer}
+.upload img{max-height:140px;max-width:100%;border-radius:10px;margin-top:8px;display:block;margin-left:auto;margin-right:auto;object-fit:cover}
+.styles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.styles>:is(div){border-radius:12px;padding:8px 4px;text-align:center;font-size:12px;background:#fff;border:2px solid transparent;cursor:pointer;line-height:1.3}
+.styles>:is(div).on{border-color:#f08a4b}
+.styles b{font-size:34px;display:block}
+.comic{display:grid;grid-template-columns:1fr 1fr;gap:4px;border:3px solid #3b2f2a;border-radius:8px;padding:4px;background:#3b2f2a}
+.comic div{background:#fffaf0;height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:34px}
+.comic i{font-size:10px;font-style:normal;background:#fff;border:1px solid #333;border-radius:8px;padding:1px 5px;margin-top:3px}
+.aiw{position:relative;overflow:hidden}
+.aiw img{width:100%;height:100%;object-fit:cover;display:block}
+.st .ai{bottom:auto;top:4px}
+.pava .ai{right:50%;transform:translateX(50%);bottom:1px;font-size:8px;padding:0 4px}
+.ai{position:absolute;right:4px;bottom:4px;background:#0008;color:#fff;font-size:9px;padding:1px 5px;border-radius:6px;font-style:normal;font-weight:normal;z-index:2;line-height:1.5}
+.relp{position:relative}
+.pava{width:58px;height:58px;border-radius:50%;margin:0 auto 6px}
+.mask{position:absolute;inset:0;background:#0007;z-index:20;display:none;align-items:flex-end}
+.mask.on{display:flex}
+.sheet{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:18px 16px 30px}
+.sheet h4{font-size:16px;margin-bottom:6px}
+.wxsub{background:#fff;width:100%;border-radius:14px 14px 0 0;padding:18px 18px 30px;font-size:14px}
+.wxsub .ck{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f0}
+.push{position:absolute;top:8px;left:10px;right:10px;background:#fffffff2;border-radius:16px;box-shadow:0 6px 24px #0003;padding:10px 12px;z-index:30;font-size:12px;display:none;backdrop-filter:blur(8px)}
+.push.on{display:block}.push b{font-size:13px}
+.sw{width:40px;height:24px;border-radius:12px;background:#07c160;position:relative;flex:none;cursor:pointer}
+.sw:after{content:"";position:absolute;right:2px;top:2px;width:20px;height:20px;border-radius:50%;background:#fff}
+.sw.off{background:#ddd}.sw.off:after{right:auto;left:2px}
+.steps{display:flex;justify-content:space-between;margin:6px 10px 16px;font-size:11px;color:#bbb}
+.steps span{flex:1;text-align:center;border-top:3px solid #eee;padding-top:5px}
+.steps span.on{color:#f08a4b;border-color:#f08a4b}
+.ob{display:none}.ob.on{display:block}
+.prog{height:8px;background:#f6e6d8;border-radius:4px;overflow:hidden;margin:12px 0}
+.prog div{height:100%;width:0;background:#f08a4b;transition:width 2.2s}
+.poster{background:linear-gradient(#fff3e3,#ffe2c6);border-radius:18px;padding:16px;box-shadow:0 6px 20px #e0b48d55}
+.qr{width:72px;height:72px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.full .phone{height:auto;max-width:390px;width:100%}
+.full .body{position:static;overflow:visible}
+.full .tab{position:static}
+.aiw.ct img,.aiw[style*="height:200px"] img,.aiw[style*="height:230px"] img{object-fit:contain;background:#fbf3e6}
+.create-entry{display:flex;gap:12px;align-items:center;cursor:pointer}
+.create-entry .ico{width:52px;height:52px;border-radius:16px;background:#fff1e6;display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.article{font-size:14px;line-height:1.85;color:#3b2f2a}
+.article h4{font-size:15px;margin:14px 0 6px}
+.article p{margin:0 0 8px}
+.fam-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f4ece4}
+.fam-row:last-child{border:0}
+.btns{display:flex;gap:8px}
+.btns .btn{margin-top:0}
+.signbar{background:linear-gradient(135deg,#4b3b6e,#8a6fd1);color:#fff;border-radius:18px;padding:16px;display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.signbar .big{font-size:48px;background:#fff3;border-radius:16px;padding:6px 10px}
+@media(max-width:430px){
+  body{padding:0;background:#2b2523}
+  .phone{width:100%;height:100dvh;height:100vh;border-radius:0;border:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+<div class="status"><span>9:41</span><span>●●● 📶 🔋</span></div>
+<div class="nav"><span class="back" id="backBtn">‹</span><span id="title">毛孩子数字生活</span><span class="capsule">··· ◎</span></div>
+<div class="body" id="body">
+
+<!-- 引导 -->
+<div class="page" id="onboard" data-t="欢迎来到毛孩子数字生活">
+<div class="steps"><span class="on" id="sp1">① 上传照片</span><span id="sp2">② 生成形象</span><span id="sp3">③ 建好档案</span></div>
+<div class="ob on" id="ob1">
+  <div class="card" style="text-align:center">
+    <div style="font-size:20px;font-weight:700;margin:6px 0">给毛孩子拍张照 📷</div>
+    <p class="mini">只要一张，30 秒拿到它的第一张 AI 形象</p>
+    <div class="upload" id="obUpload" style="margin-top:14px;padding:28px">点击上传 / 拍照<br><small>正脸清晰效果更好</small></div>
+    <div class="lab" style="text-align:left;margin-top:10px">它是</div>
+    <div class="chips" data-single data-group="obSpecies">
+      <span class="chip on" data-v="猫">🐱 猫</span>
+      <span class="chip" data-v="狗">🐶 狗</span>
+      <span class="chip" data-v="水族">🐠 水族</span>
+      <span class="chip" data-v="其他">🐦 其他</span>
+    </div>
+    <button class="btn" id="obSample">用示例照片体验</button>
+  </div>
+</div>
+<div class="ob" id="ob2">
+  <div class="card" style="text-align:center">
+    <div style="font-size:18px;font-weight:700">正在为它定妆… ✨</div>
+    <div class="prog"><div id="pg"></div></div>
+    <p class="mini" id="obt">识别毛色、脸型、眼睛颜色…</p>
+    <div id="obres" style="display:none">
+      <div class="aiw" id="obResImg" style="width:220px;height:220px;border-radius:20px;margin:10px auto"><img src="img/nuomi_jp.jpg" alt=""><span class="ai">AI 生成</span></div>
+      <p style="font-weight:700">它的第一张作品出炉啦！</p>
+      <p class="mini">用时 18 秒 · 日系手绘（示例结果）</p>
+      <button class="btn" id="obNext3">下一步：建档案</button>
+    </div>
+  </div>
+</div>
+<div class="ob" id="ob3">
+  <div class="card">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="aiw" id="obArchImg" style="width:70px;height:70px;border-radius:50%;flex:none"><img src="img/nuomi_jp.jpg" alt=""><span class="ai">AI 生成</span></div>
+      <div><b>已自动建好档案 🎉</b><div class="mini" id="obHint">识别到：橘白猫 · 约 3 岁（可修改）</div></div>
+    </div>
+    <div class="lab">名字</div><input id="obName" value="糯米">
+    <div class="lab">生日</div><input id="obBday" type="date" value="2023-05-20">
+    <div class="lab">性格（选 2 个）</div>
+    <div class="chips" data-group="obTags">
+      <span class="chip on">话痨</span><span class="chip on">干饭王</span><span class="chip">高冷</span><span class="chip">粘人</span><span class="chip">胆小</span>
+    </div>
+    <button class="btn" id="obDone">完成，进入家庭主页</button>
+    <button class="btn o" id="obShare">先把第一张作品分享出去</button>
+  </div>
+</div>
+</div>
+
+<!-- 动态页壳 -->
+<div class="page" id="home" data-t="毛孩子数字生活"></div>
+<div class="page" id="pet" data-t="宠物主页"></div>
+<div class="page" id="family" data-t="管理家庭"></div>
+<div class="page" id="petedit" data-t="编辑档案"></div>
+<div class="page" id="journal" data-t="记一笔"></div>
+<div class="page" id="create" data-t="创作中心">
+  <div class="demo">把生活里的瞬间，做成毛孩子的作品（示例生成）</div>
+  <div class="card create-entry" data-go="studio"><div class="ico">🎨</div><div><b>AI 形象</b><div class="mini">上传照片，生成并锁定专属定妆</div></div></div>
+  <div class="card create-entry" data-go="sticker"><div class="ico">😹</div><div><b>表情包</b><div class="mini">情绪、场景、自定义文字，一次出 6 张</div></div></div>
+  <div class="card create-entry" data-go="comic"><div class="ico">📖</div><div><b>漫画贺卡</b><div class="mini">成长漫画、节日贺卡、角色卡</div></div></div>
+</div>
+
+<!-- AI 工作室 -->
+<div class="page" id="studio" data-t="AI 毛孩子工作室">
+<div class="card"><h3>① 上传真实照片</h3>
+  <div class="upload" id="studioUpload">📷 点击上传 1-5 张清晰照片<br><small>正脸 + 侧脸，生成更像 · 仅本机预览</small></div>
+  <div class="lab">宠物</div><div class="chips" data-single data-group="studioPet" id="studioPets"></div>
+  <div class="lab">外貌特点</div><input id="studioFeat" value="">
+</div>
+<div class="card"><h3>② 选择风格</h3>
+  <div class="styles" id="studioStyles">
+    <div class="on" data-style="日系手绘"><div class="aiw" style="height:80px;border-radius:8px"><img src="img/nuomi_jp.jpg" alt=""><span class="ai">AI 生成</span></div>日系手绘</div>
+    <div data-style="3D 软萌"><div class="aiw" style="height:80px;border-radius:8px"><img src="img/nuomi_3d.jpg" alt=""><span class="ai">AI 生成</span></div>3D 软萌</div>
+    <div data-style="水彩"><div class="aiw" style="height:80px;border-radius:8px"><img src="img/nuomi_wc.jpg" alt=""><span class="ai">AI 生成</span></div>水彩</div>
+    <div data-style="蜡笔童话"><b>🖍️</b>蜡笔童话</div>
+    <div data-style="像素风"><b>👾</b>像素风</div>
+    <div data-style="国潮" data-vip="1"><b>🎎</b>国潮<span class="soon">会员</span></div>
+  </div>
+  <button class="btn" id="btnGen">✨ 生成定妆形象（今日免费剩 <span id="freeCount">3</span> 次）</button>
+</div>
+<div class="card" id="result" style="display:none">
+  <h3>③ 定妆结果 <small>选一张作为固定角色</small></h3>
+  <div class="styles" id="resultStyles"></div>
+  <p class="mini" style="margin-top:8px">锁定后，表情包、漫画、贺卡都会以这个形象为基础，保持长相一致。</p>
+  <button class="btn g" id="btnLock">锁定为专属形象</button>
+  <button class="btn o" data-go="poster">生成分享海报</button>
+</div>
+</div>
+
+<!-- 表情包 -->
+<div class="page" id="sticker" data-t="表情包生成">
+<div class="card">
+  <div class="lab">情绪</div>
+  <div class="chips" data-single data-group="stEmo">
+    <span class="chip on">开心</span><span class="chip">委屈</span><span class="chip">无语</span><span class="chip">震惊</span><span class="chip">撒娇</span>
+  </div>
+  <div class="lab">场景</div>
+  <div class="chips" data-single data-group="stScene">
+    <span class="chip">早安</span><span class="chip">晚安</span><span class="chip on">催饭</span><span class="chip">上班摸鱼</span><span class="chip">求零食</span>
+  </div>
+  <div class="lab">自定义文字</div><input id="stxt" value="饭呢？？">
+  <div class="lab" style="margin-top:8px">多宠合拍</div>
+  <div class="chips" data-group="stPets" id="stPetChips"></div>
+  <button class="btn" id="btnStk">生成一组（6 张）</button>
+</div>
+<div class="card">
+  <h3 id="stkTitle">表情包 <small>6 张 · 日系手绘</small></h3>
+  <div class="stickers" id="stkBox">
+    <div class="st aiw" style="padding:0;border-style:solid"><img src="img/st1.jpg" style="height:82%;object-fit:contain" alt=""><i>开心到飞起</i><span class="ai">AI 生成</span></div>
+    <div class="st aiw" style="padding:0;border-style:solid"><img src="img/st2.jpg" style="height:82%;object-fit:contain" alt=""><i>委屈巴巴</i><span class="ai">AI 生成</span></div>
+    <div class="st aiw" style="padding:0;border-style:solid"><img src="img/st3.jpg" style="height:82%;object-fit:contain" alt=""><i>无语…</i><span class="ai">AI 生成</span></div>
+    <div class="st aiw" style="padding:0;border-style:solid"><img src="img/st4.jpg" style="height:82%;object-fit:contain" alt=""><i>震惊！</i><span class="ai">AI 生成</span></div>
+    <div class="st aiw" style="padding:0;border-style:solid"><img src="img/st5.jpg" style="height:82%;object-fit:contain" alt=""><i>抱抱嘛</i><span class="ai">AI 生成</span></div>
+    <div class="st aiw" style="padding:0;border-style:solid"><img src="img/st6.jpg" style="height:82%;object-fit:contain" alt=""><i>饭呢？？</i><span class="ai">AI 生成</span></div>
+  </div>
+  <button class="btn g" id="btnSaveStk">保存并添加到微信表情</button>
+  <button class="btn o" data-go="poster">生成分享海报</button>
+  <button class="btn o" id="btnHd">高清导出 👑</button>
+</div>
+<div class="card"><h3>多宠合拍 <small>两猫嫌弃 · 金毛热情</small></h3>
+  <div class="aiw" style="height:200px;border-radius:12px"><img src="img/family.jpg" alt=""><span class="ai">AI 生成</span></div>
+  <button class="btn o" data-go="poster">生成分享海报</button>
+</div>
+</div>
+
+<!-- 漫画 贺卡 角色卡 -->
+<div class="page" id="comic" data-t="漫画 · 贺卡 · 角色卡">
+<div class="seg" id="comicSeg">
+  <span class="on" data-sub="cm1">成长漫画</span>
+  <span data-sub="cm2">贺卡</span>
+  <span data-sub="cm3">角色卡</span>
+</div>
+<div class="sb" id="cm1">
+  <div class="card">
+    <div class="lab">真实事件（AI 只负责创作，不编造经历）</div>
+    <input id="comicEvent" value="旺财今天第一次去公园，把树枝叼回了家">
+    <button class="btn" id="btnComic">生成一页漫画</button>
+  </div>
+  <div class="card">
+    <h3 id="comicTitle">《第一次去公园》 <small>4 格</small></h3>
+    <div class="relp"><div class="comic" id="comicGrid">
+      <div>🐶🌳<i>哇！好大的草地！</i></div>
+      <div>🐶🪵<i>这根树枝是我的</i></div>
+      <div>🐶🚪🪵<i>带回家给猫看</i></div>
+      <div>😾😾<i>……拿走</i></div>
+    </div><span class="ai">AI 生成</span></div>
+    <button class="btn g" data-go="poster">生成分享海报</button>
+  </div>
+</div>
+<div class="sb" id="cm2" style="display:none">
+  <div class="card">
+    <p class="mini" id="cardHint"></p>
+    <div class="relp" id="cardPreview" style="background:linear-gradient(#ffe7b3,#ffc98f);border-radius:16px;padding:24px;text-align:center;margin-top:10px"></div>
+    <div class="chips" data-single data-group="cardType" style="margin-top:10px">
+      <span class="chip on">生日</span><span class="chip">领养纪念日</span><span class="chip">春节</span><span class="chip">中秋</span><span class="chip">圣诞</span>
+    </div>
+    <button class="btn" id="btnCard">生成贺卡</button>
+  </div>
+</div>
+<div class="sb" id="cm3" style="display:none">
+  <div class="card">
+    <div class="lab">为谁做角色卡</div>
+    <div class="chips" data-single data-group="rolePet" id="rolePetChips"></div>
+    <div class="relp" id="rolePreview" style="border:3px solid #f08a4b;border-radius:16px;padding:14px;background:#fffaf4;margin-top:8px"></div>
+    <button class="btn" id="btnRole">生成角色卡</button>
+    <button class="btn o" data-go="poster">生成分享海报，让朋友做同款</button>
+  </div>
+</div>
+</div>
+
+<!-- 发现 -->
+<div class="page" id="find" data-t="发现">
+<div class="seg" id="fseg"><span class="on">推荐</span><span>猫咪</span><span>狗狗</span><span>其他动物</span><span>AI 创作</span></div>
+<div class="demo">社区示例内容 · 评论/关注等完整社交 <b>即将上线</b>，当前可浏览和分享作品</div>
+<div class="feed" id="feed"></div>
+<button class="btn" id="btnPublish">+ 发布作品</button>
+</div>
+
+<!-- 百科 -->
+<div class="page" id="wiki" data-t="百科与工具">
+<div class="card" style="text-align:center"><span class="soon">演示内容</span><p class="mini">百科文章与工具可在本 Demo 中浏览体验，内容均为示例，不能替代正规兽医建议</p></div>
+<div class="seg" id="wikiSeg">
+  <span class="on" data-sub="w1">🐱 猫</span>
+  <span data-sub="w2">🐶 狗</span>
+  <span data-sub="w3">🐠 水族</span>
+  <span data-sub="w4">🦎 异宠</span>
+</div>
+<div class="card"><h3>🧰 工具</h3>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+    <div id="btnIdPet"><b>📷</b>品种识别</div>
+    <div id="btnToCalc"><b>🍚</b>喂食量计算</div>
+    <div id="btnSymptom"><b>🩺</b>症状自查</div>
+  </div>
+</div>
+<div class="card" id="calc">
+  <h3>🍚 喂食量计算器</h3>
+  <div class="lab">体重 (kg)</div><input id="kg" value="5.2">
+  <div class="lab">状态</div>
+  <div class="chips" data-single data-group="feedFactor">
+    <span class="chip on" data-f="1.2">成年·已绝育</span>
+    <span class="chip" data-f="1.4">成年·未绝育</span>
+    <span class="chip" data-f="2.5">幼年</span>
+  </div>
+  <div id="cres" style="font-size:14px;font-weight:700;color:#f08a4b"></div>
+  <p class="mini">按 RER=70×体重^0.75 估算，仅供参考（示例数据）</p>
+</div>
+<div class="sb" id="w1"><div class="card"><h3>猫咪百科</h3>
+  <div class="li" data-article="cat-urinary">🚽<div class="t">如何预防猫泌尿问题</div>›</div>
+  <div class="li" data-article="cat-food">🍽️<div class="t">湿粮 vs 干粮怎么搭配</div>›</div>
+</div></div>
+<div class="sb" id="w2" style="display:none"><div class="card"><h3>狗狗百科</h3>
+  <div class="li" data-article="dog-exercise">🦮<div class="t">金毛每天需要多少运动量</div>›</div>
+  <div class="li" data-article="dog-potty">🎓<div class="t">定点如厕训练 7 天法</div>›</div>
+</div></div>
+<div class="sb" id="w3" style="display:none"><div class="card"><h3>水族百科</h3>
+  <div class="li" data-article="aqua-cycle">💧<div class="t">新缸开缸与硝化系统</div>›</div>
+  <div class="li" data-article="goldfish-water">🐠<div class="t">金鱼换水频率</div>›</div>
+</div></div>
+<div class="sb" id="w4" style="display:none">
+  <div class="warn">⚠️ <b>合规提示</b>：请勿饲养、买卖、发布国家重点保护野生动物及《濒危野生动植物种国际贸易公约》（CITES）附录物种。部分鹦鹉、龟类、蜥蜴需具备合法来源证明。平台将对违规内容进行下架处理。</div>
+  <div class="card"><h3>异宠百科</h3>
+    <div class="li" data-article="budgie">🐦<div class="t">虎皮鹦鹉（人工繁育常见品种）饲养指南</div>›</div>
+    <div class="li" data-article="hamster">🐹<div class="t">仓鼠笼子怎么选</div>›</div>
+    <div class="li" data-article="turtle-law">🐢<div class="t">如何判断龟类是否为保护物种</div>›</div>
+  </div>
+</div>
+</div>
+
+<div class="page" id="article" data-t="百科文章"></div>
+<div class="page" id="shop" data-t="好物推荐"></div>
+<div class="page" id="poster" data-t="分享海报"></div>
+
+<!-- 做同款 -->
+<div class="page" id="same" data-t="做同款">
+<div class="card" style="display:flex;gap:10px;align-items:center;background:#f0fff4"><span style="font-size:26px">💌</span><div class="mini"><b style="color:#3b2f2a">好友 Even</b> 分享了「糯米」的 3D 软萌形象，邀请你用自家毛孩子做同款</div></div>
+<div class="card"><h3>好友的作品 <small>3D 软萌 · 1,284 人做了同款</small></h3><div class="aiw" style="height:200px;border-radius:12px"><img src="img/nuomi_3d.jpg" alt=""><span class="ai">AI 生成</span></div></div>
+<div class="card"><h3>换成你家毛孩子</h3>
+  <div class="upload" id="sameUpload">📷 上传你家宠物的照片</div>
+  <div id="samep" class="prog" style="display:none"><div id="spg"></div></div>
+  <div id="sameres" style="display:none;text-align:center">
+    <p class="mini" style="margin:8px 0" id="sameHint">示例：你家「豆豆」（金毛）用同款模板生成的形象（示意）</p>
+    <div class="aiw" id="sameResImg" style="height:200px;border-radius:12px"><img src="img/wangcai.jpg" alt=""><span class="ai">AI 生成</span></div>
+    <button class="btn" id="btnSameSave">保存并建档案（新用户免费 3 次）</button>
+    <button class="btn o" data-go="poster">我也生成海报</button>
+  </div>
+</div>
+</div>
+
+<div class="page" id="remind" data-t="提醒设置"></div>
+<div class="page" id="me" data-t="我的"></div>
+<div class="page" id="vip" data-t="会员中心"></div>
+<div class="page" id="settings" data-t="设置 · 隐私 · 帮助"></div>
+
+</div><!-- /body -->
+
+<div class="tab" id="tab">
+  <div class="on" data-p="home"><b>🏠</b>首页</div>
+  <div data-p="create"><b>🎨</b>创作</div>
+  <div data-p="find"><b>🔍</b>发现</div>
+  <div data-p="me"><b>🙂</b>我的</div>
+</div>
+<div class="toast" id="toast"></div>
+<input type="file" id="filePick" accept="image/*" hidden>
+
+<div class="mask" id="pay">
+  <div class="sheet">
+    <div style="text-align:center;font-size:34px">🎨</div>
+    <h4 style="text-align:center">今天的免费次数用完啦</h4>
+    <p class="mini" style="text-align:center">基础档案、纪念册永久免费；开通会员解锁更多 AI 创作</p>
+    <div class="plan on" data-plan="pack"><b>单次加油包</b> <span class="price">¥ 9.9</span><div class="mini">再生成 10 次 + 一套表情包高清导出</div></div>
+    <div class="plan" data-plan="month"><b>连续包月</b> <span class="price">¥ 15/月</span><div class="mini">首月 ¥ 6 · 全部风格、不限次数，可随时取消</div></div>
+    <div class="plan" data-plan="year"><b>年卡</b> <span class="price">¥ 128/年</span><div class="mini">送电子年度回忆册 · 家庭共享</div></div>
+    <button class="btn g" id="btnPay">微信支付</button>
+    <button class="btn o" id="btnPayLater">明天再来</button>
+  </div>
+</div>
+<div class="mask" id="wxm">
+  <div class="wxsub">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span style="font-size:22px">🐾</span><b>毛孩子数字生活</b> <span class="mini">申请</span></div>
+    <div style="font-weight:700;margin-bottom:6px">向你发送以下消息</div>
+    <div class="ck">宠物用药提醒<span style="color:#07c160">✔</span></div>
+    <div class="ck">疫苗驱虫到期提醒<span style="color:#07c160">✔</span></div>
+    <div class="ck">宠物生日提醒<span style="color:#07c160">✔</span></div>
+    <div class="mini" style="margin:10px 0">☑ 总是保持以上选择，不再询问</div>
+    <div style="display:flex;gap:10px">
+      <button class="btn" style="background:#f2f2f2;color:#07c160" id="wxCancel">取消</button>
+      <button class="btn g" id="wxAllow">允许</button>
+    </div>
+  </div>
+</div>
+<div class="mask" id="cfm">
+  <div class="sheet">
+    <h4 id="cfmTitle">请确认</h4>
+    <p class="mini" id="cfmMsg" style="margin:8px 0 12px"></p>
+    <div class="btns"><button class="btn o" id="cfmNo">取消</button><button class="btn d" id="cfmYes">确定</button></div>
+  </div>
+</div>
+<div class="push" id="push"><div style="display:flex;justify-content:space-between;color:#888;font-size:11px"><span>💬 微信 · 服务通知</span><span>现在</span></div>
+<b>毛孩子数字生活：宠物用药提醒</b>
+<div>宠物：煤球<br>提醒内容：该喂益生菌啦（半包）<br>时间：今天 08:00</div>
+<div style="color:#576b95;margin-top:4px">进入小程序查看 ›</div></div>
+</div>
+<script>
+(function(){
+const LS_KEY = 'mh_demo_v1';
+const WEEK = '日一二三四五六';
+const TAB_ROOTS = ['home','create','find','me'];
+const TAB_OF = {
+  home:'home',
+  create:'create', studio:'create', sticker:'create', comic:'create',
+  find:'find',
+  me:'me', vip:'me', settings:'me'
+};
+const EMO_TXT = {开心:'开心到飞起',委屈:'委屈巴巴',无语:'无语…',震惊:'震惊！',撒娇:'抱抱嘛'};
+const SCENE_TXT = {早安:'早安呀',晚安:'晚安喵',催饭:'饭呢？？',上班摸鱼:'先摸会儿鱼',求零食:'零食呢！'};
+const STYLE_IMGS = {
+  '日系手绘':'img/nuomi_jp.jpg',
+  '3D 软萌':'img/nuomi_3d.jpg',
+  '水彩':'img/nuomi_wc.jpg'
+};
+const GOODS = [
+  {cats:['推荐','猫粮'], emoji:'🥫', name:'鸡肉主食罐 6 罐装', price:'¥ 59', desc:'32 位铲屎官好评'},
+  {cats:['推荐','猫砂'], emoji:'🪣', name:'豆腐混合猫砂', price:'¥ 39', desc:'多猫家庭推荐'},
+  {cats:['推荐','狗粮'], emoji:'🍖', name:'大型成犬粮 2kg', price:'¥ 79', desc:'金毛主人实测'},
+  {cats:['推荐'], emoji:'🦴', name:'大型犬耐咬玩具', price:'¥ 45', desc:'金毛主人实测'},
+  {cats:['推荐','水族'], emoji:'🫧', name:'静音鱼缸过滤器', price:'¥ 88', desc:'换水更省心'},
+  {cats:['推荐','鸟用品'], emoji:'🌾', name:'鹦鹉混合谷粮', price:'¥ 26', desc:'虎皮鹦鹉常备'},
+  {cats:['推荐'], emoji:'🧴', name:'宠物无泪香波', price:'¥ 49', desc:'敏感肌适用'}
+];
+const ARTICLES = {
+  'cat-urinary':{title:'如何预防猫泌尿问题', body:
+    '<p>猫咪泌尿系统问题在室内猫中比较常见，早期可能只是尿频、进出猫砂盆却尿得很少，或在盆外如厕。本篇为示例科普，不能替代正规兽医诊断。</p>'+
+    '<h4>日常可以留意的习惯</h4><p>保证随时有干净、充足的饮水。很多猫咪更爱流动的水，可以尝试饮水器，同时在家多放几个浅碗。湿粮能补充水分，尤其对只吃干粮的猫更有帮助。</p>'+
+    '<p>猫砂盆要足够大、足够干净，多猫家庭建议「猫的数量 + 1」个盆，减少因抢盆而憋尿。</p>'+
+    '<h4>什么时候该就医</h4><p>若出现血尿、反复蹲盆却尿不出、精神萎靡或腹痛，请立刻就医。公猫尤其要警惕尿道阻塞，这是急症。</p>'+
+    '<p class="mini">本文为 Demo 示例内容，仅供浏览体验。</p>'},
+  'cat-food':{title:'湿粮 vs 干粮怎么搭配', body:
+    '<p>干粮方便保存、有一定洁齿作用；湿粮水分高、适口性通常更好。多数家庭会把两者搭配使用，而不是二选一。</p>'+
+    '<h4>一种常见搭配思路</h4><p>成年猫可以「以湿粮保证水分，用干粮补充能量和便利」。例如一天两餐湿粮，另备少量干粮作为加餐。具体克数请按体重、是否绝育和活动量调整，也可使用本页的喂食量计算器做粗略估算。</p>'+
+    '<p>换粮时建议用 7 天左右逐步过渡，避免突然更换造成肠胃不适。任何配方都以配料表和营养成分是否完整为准，本 Demo 不推荐具体品牌。</p>'+
+    '<p class="mini">本文为 Demo 示例内容，仅供浏览体验，不能替代饲养处方或兽医建议。</p>'},
+  'dog-exercise':{title:'金毛每天需要多少运动量', body:
+    '<p>金毛寻回犬精力充沛、热爱与人互动。成年金毛一般每天需要大约 1～2 小时的活动，包括散步、嗅闻、检索游戏和一定强度的奔跑，而不是只在小区匆匆走一圈。</p>'+
+    '<h4>按年龄调整</h4><p>幼犬骨骼尚未发育完全，避免长时间跑步和反复跳沙发、上下楼梯。老年犬或有关节问题的狗，应改为多次短距离散步，并听从医嘱控制运动强度。</p>'+
+    '<p>天气炎热时避开正午，注意补水和趾垫烫伤；雨天可用室内嗅闻垫、训练游戏替代部分户外运动。</p>'+
+    '<p class="mini">本文为 Demo 示例内容。旺财的故事设定是 4 岁金毛，喜欢公园和树枝，但不代表所有金毛都适合同样的运动量。</p>'},
+  'dog-potty':{title:'定点如厕训练 7 天法', body:
+    '<p>定点如厕靠的是规律、及时表扬和减少失误，而不是责骂。下面是一个适合演示理解的 7 天节奏，实际所需时间因狗而异。</p>'+
+    '<h4>第 1～2 天：建立规律</h4><p>固定饭点、喝水点和出门点。幼犬通常在醒来、吃完、玩完后最容易想上厕所，这时立刻带到指定地点。</p>'+
+    '<h4>第 3～5 天：抓住成功瞬间</h4><p>只在指定地点如厕成功后给予零食或轻快表扬。如果在室内失误，冷静清理，不要责打，以免狗把「人靠近」和「惩罚」联系起来。</p>'+
+    '<h4>第 6～7 天：拉长间隔</h4><p>在成功次数稳定后，再慢慢拉长出门间隔。夜间也尽量保持同一个排泄点。</p>'+
+    '<p class="mini">本文为 Demo 示例内容，仅供浏览体验。</p>'},
+  'aqua-cycle':{title:'新缸开缸与硝化系统', body:
+    '<p>新鱼缸不能立刻密密麻麻地放鱼。开缸的核心是培养硝化细菌：把鱼的排泄物和残饵转化成毒性较低的硝酸盐，再通过换水把它带走。</p>'+
+    '<h4>常见步骤（示例）</h4><p>先清洗缸体和滤材（不要用肥皂），注水并启动过滤和增氧。可以投放少许菌源或让滤材在已稳定的旧缸中「养菌」。每天观察水质，待氨和亚硝酸盐降下来后再少量、分批放鱼。</p>'+
+    '<p>硝化系统建立通常需要数周，而不是一两天。期间避免频繁彻底洗滤材，也不要一次性把水全部换掉。</p>'+
+    '<p class="mini">本文为 Demo 示例内容。泡泡的鱼缸故事仅作演示，实际开缸请结合你的缸容和鱼类需求。</p>'},
+  'goldfish-water':{title:'金鱼换水频率', body:
+    '<p>金鱼食量大、排泄也多，水质比很多人体感中的「金鱼很好养」更需要维护。换水频率取决于缸容、过滤、饲养密度和喂食量，没有适用于所有鱼缸的固定天数。</p>'+
+    '<h4>一个可参考的起点</h4><p>有过滤的适中密度鱼缸，许多 Aquarist 会每周换约 1/3 的水，并吸走底部残饵。小缸、无过滤或养得较密时，可能需要更勤换，但每次仍避免大幅度改变水温与水质。</p>'+
+    '<p>新水建议除氯并尽量与原缸温度接近。如果鱼出现浮头、缩鳍或水色骤变，先检查过滤和水质，再决定是否额外换水。</p>'+
+    '<p class="mini">本文为 Demo 示例内容。首页「泡泡鱼缸换水 1/3」是根据示例家庭设定的提醒，不是对所有金鱼缸的处方。</p>'},
+  'budgie':{title:'虎皮鹦鹉（人工繁育常见品种）饲养指南', body:
+    '<p>虎皮鹦鹉是常见的人工繁育宠物鸟，活泼爱叫，部分个体能学简单的词语。请确认来源合法，并为其提供足够飞跳空间的笼子或专用鸟房。</p>'+
+    '<h4>饮食与环境</h4><p>主食可用混合谷粮，同时提供蔬菜、少量水果和专用矿物质补剂。全天供应清洁饮水。笼子应远离厨房油烟、高温窗口和夜间持续的强光。</p>'+
+    '<p>它们需要出笼活动与互动，但也要注意家中的风扇、热汤和打开的窗户。啃咬是天性，请提供安全的磨喙玩具。</p>'+
+    '<h4>合规提醒</h4><p>请勿饲养、买卖国家重点保护野生动物或 CITES 附录物种。部分鹦鹉种类需要合法来源证明。本平台示例仅介绍人工繁育常见的虎皮鹦鹉。</p>'+
+    '<p class="mini">本文为 Demo 示例内容。啾啾的「学会说你好」是示例家庭故事。</p>'},
+  'hamster':{title:'仓鼠笼子怎么选', body:
+    '<p>仓鼠是夜行、爱打洞的小动物，笼子首先要够大、通风，并且能垫足够深的垫料，而不是只看「看起来精致」。</p>'+
+    '<h4>选择时可以问自己</h4><p>底部是否平整、垫料能否堆到让它挖隧道？轮子直径是否足够，避免弯腰跑？条纹间距会不会卡住脚或让它逃出？是否便于清理残饵和尿湿的角落？</p>'+
+    '<p>尽量避免过小的手提笼作为长期居所。不同品种体型不同，选择前先了解你养的是什么仓鼠。本 Demo 不推荐具体品牌。</p>'+
+    '<p class="mini">本文为 Demo 示例内容，仅供浏览体验。</p>'},
+  'turtle-law':{title:'如何判断龟类是否为保护物种', body:
+    '<p>不是所有「市场上能见到的龟」都可以合法饲养或买卖。部分龟类属于国家重点保护野生动物，或被列入 CITES 附录，需要合法来源证明，严禁非法猎捕、交易和展示。</p>'+
+    '<h4>你可以做的事</h4><p>先查清品种的学名，再对照官方保护名录和 CITES 附录，而不是只看卖家口头介绍。无法确定时，不要购买、不转运、不在社区发布相关交易信息。</p>'+
+    '<p>示范平台会对疑似违规的内容做下架处理。本页只提供判断思路，不构成法律意见，具体以主管部门最新名录和规定为准。</p>'+
+    '<div class="warn">请勿饲养、买卖、发布国家重点保护野生动物及 CITES 附录物种。</div>'+
+    '<p class="mini">本文为 Demo 示例内容。</p>'}
+};
+const POSTS = {
+  '推荐':[['🐱🐶','AI 合照：两猫一狗的日常','#ffe1c7',120,'糯米一家',326,'family.jpg'],['🐠','开缸 30 天的小鱼缸','#cfeffd',90,'水草阿南',88],['😹','AI 表情包：糯米的委屈三连','#fbf3e6',170,'糯米一家',512,'st2.jpg'],['🦮','金毛第一次学游泳','#ffe9a8',140,'旺旺队长',230]],
+  '猫咪':[['🐈','猫砂换了一款，结块好多了','#ffe1c7',100,'橘座',66],['😼','猫咪泌尿问题经验分享','#e2e8f0',130,'猫医生笔记',190]],
+  '狗狗':[['🐕','遛狗路线分享','#d7f5d0',110,'柯基豆豆',77],['🦴','狗粮换粮 7 天过渡法','#ffe9a8',120,'金毛妈',145]],
+  '其他动物':[['🐦','虎皮鹦鹉学说话 Day30','#d7f5d0',120,'啾啾',99],['🐹','仓鼠的新家','#ffe1c7',100,'团子',53]],
+  'AI 创作':[['🎨🐱','煤球的专属角色卡','#e9e3ff',140,'糯米一家',260,'meiqiu.jpg'],['📖','四格漫画：第一次去公园','#fff1c2',120,'旺财',388]]
+};
+const SIGNS = [
+  {id:'wangcai', quote:'今天也要热情地摇尾巴！', mood:'☀️ 元气满满', line:'猫猫们今天又没理我，但我原谅她们了。', yi:'遛弯', ji:'洗澡'},
+  {id:'nuomi', quote:'饭呢？已经等了三个时辰了。', mood:'🍚 干饭模式', line:'谁把我的碗放在柜子上层了，我记住了。', yi:'加餐', ji:'禁食称体重'},
+  {id:'meiqiu', quote:'哼，今天也要保持高冷。', mood:'🌙 冷静观察', line:'旺财又想跟我玩，我选择跳上冰箱。', yi:'晒太阳', ji:'被摸肚皮'},
+  {id:'paopao', quote:'气泡咕噜咕噜，今天的水很清。', mood:'💧 状态稳定', line:'有人路过缸前，我就优雅地游一个来回。', yi:'换水 1/3', ji:'投喂过量'},
+  {id:'jiujiu', quote:'你好！你好！今天也要多说话。', mood:'🎤 学舌日', line:'学会的第三个词还在保密。', yi:'出笼活动', ji:'厨房油烟'}
+];
+
+let state, hist = [], lastTab = 'home', viewPetId = null, albumMode = 'pa1';
+let albumSub = 'al1', editPetId = null, journalPhoto = null, studioPhoto = null;
+let samePhoto = null, onboardPhoto = null, onboardUsedSample = true, fileCb = null;
+let confirmCb = null, feedFactor = 1.2, shopCat = '为糯米一家推荐';
+let selectedStyle = '日系手绘', resultStyle = '日系手绘';
+let toastTimer = 0;
+
+function today(){ return new Date(); }
+function isoDate(d){ const z=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate()); }
+function parseISO(s){ const [y,m,d]=(s||'').split('-').map(Number); return new Date(y, (m||1)-1, d||1); }
+function pad(n){ return String(n).padStart(2,'0'); }
+function cnDate(d, withWeek){
+  const s = (d.getMonth()+1)+'月'+d.getDate()+'日';
+  return withWeek ? s+' · 周'+WEEK[d.getDay()] : s;
+}
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function ageText(bday){
+  if(!bday) return '';
+  const d=parseISO(bday), t=today();
+  let y=t.getFullYear()-d.getFullYear(), m=t.getMonth()-d.getMonth();
+  if(t.getDate()<d.getDate()) m--;
+  if(m<0){ y--; m+=12; }
+  if(y<=0) return m+'个月';
+  return y+'岁';
+}
+function petSub(p){
+  const b=p.shortBreed || ((p.breed&&p.breed.length<=6)?p.breed:(p.species||''));
+  const a=ageText(p.birthday);
+  return [b,a].filter(Boolean).join(' · ');
+}
+function genderMark(g){ return (g==='♀'||g==='♂') ? (' '+g) : ''; }
+function dayDiff(dateStr){
+  const a=parseISO(isoDate(today())), b=parseISO(dateStr);
+  return Math.round((b-a)/86400000);
+}
+function relDate(dateStr){
+  const n=dayDiff(dateStr), d=parseISO(dateStr), base=cnDate(d,true);
+  if(n===0) return '今天 · '+base;
+  if(n===1) return '还有 1 天 · '+base;
+  if(n>1) return '还有 '+n+' 天 · '+base;
+  if(n===-1) return '昨天 · '+base;
+  return Math.abs(n)+' 天前 · '+base;
+}
+
+function defaultPets(){
+  return [
+    {id:'nuomi', name:'糯米', gender:'♀', species:'猫', breed:'中华田园橘猫', shortBreed:'橘猫', color:'c1', emoji:'🐱',
+      birthday:'2023-05-20', adopted:'2023-07-01', tags:['话痨','干饭王','爱嫌弃旺财'], catchphrase:'饭呢？',
+      appearance:'橘白相间、圆脸、白肚皮、琥珀色大眼睛',
+      photo:'img/nuomi_jp.jpg', aiPhoto:true, lockedStyle:'日系手绘', lockedImg:'img/nuomi_jp.jpg',
+      styles:[{name:'日系手绘',img:'img/nuomi_jp.jpg'},{name:'3D 软萌',img:'img/nuomi_3d.jpg'},{name:'水彩',img:'img/nuomi_wc.jpg'}],
+      weightUnit:'kg', weights:[{m:'6月',v:4.4},{m:'7月',v:4.6},{m:'8月',v:4.8},{m:'9月',v:5.0},{m:'10月',v:5.1},{m:'11月',v:5.2}],
+      vax:[{icon:'💉',title:'猫三联 第3针',sub:'2024-10-28 · 爱宠动物医院（示例）',tag:'已完成'},
+           {icon:'💉',title:'狂犬疫苗',sub:'2025-10-20',tag:'已完成'},
+           {icon:'💉',title:'猫三联加强针',sub:'2026-11-02 · 已接种',tag:'已完成'},
+           {icon:'🏥',title:'轻微肠胃炎复诊',sub:'2026-03-12 · 已康复',tag:''}],
+      timeline:[{date:'2026-10-12',text:'第一次学会开柜门'},{date:'2026-08-03',text:'和旺财第一次同框午睡'},{date:'2023-07-01',text:'到家第一天，躲在沙发底下'}],
+      stickers:24, comics:3, roleTitle:'干饭话痨', roleMbti:'ENFP 喵', roleSkill:'开柜觅食 ★★★★★ · 嫌弃旺财 ★★★★', roleRel:'煤球的姐姐；旺财的嫌弃对象'},
+    {id:'meiqiu', name:'煤球', gender:'♂', species:'猫', breed:'中华田园黑猫', shortBreed:'黑猫', color:'c2', emoji:'🐈‍⬛',
+      birthday:'2024-03-15', adopted:'2024-05-06', tags:['高冷','深夜跑酷','嫌弃旺财'], catchphrase:'哼，幼稚。',
+      appearance:'一身乌黑、黄眼睛、走路无声',
+      photo:'img/meiqiu.jpg', aiPhoto:true, lockedStyle:'3D 软萌', lockedImg:'img/meiqiu.jpg',
+      styles:[{name:'3D 软萌',img:'img/meiqiu.jpg'}],
+      weightUnit:'kg', weights:[{m:'6月',v:3.6},{m:'7月',v:3.7},{m:'8月',v:3.8},{m:'9月',v:3.9},{m:'10月',v:4.0},{m:'11月',v:4.0}],
+      vax:[{icon:'💉',title:'猫三联 第3针',sub:'2025-06-18 · 爱宠动物医院（示例）',tag:'已完成'},
+           {icon:'💉',title:'狂犬疫苗',sub:'2025-07-02',tag:'已完成'},
+           {icon:'🪱',title:'体外驱虫',sub:'下次 2026-11-15',tag:'待办'}],
+      timeline:[{date:'2026-10-12',text:'学会开柜门（青出于蓝）'},{date:'2026-07-22',text:'深夜跑酷被抓包'},{date:'2024-05-06',text:'到家第一天，躲在柜子里'}],
+      stickers:18, comics:2, roleTitle:'冷面军师', roleMbti:'INTJ 喵', roleSkill:'深夜跑酷 ★★★★★ · 高冷凝视 ★★★★', roleRel:'糯米的跟班；旺财的嫌弃对象'},
+    {id:'wangcai', name:'旺财', gender:'♂', species:'狗', breed:'金毛寻回犬', shortBreed:'金毛', color:'c3', emoji:'🐶',
+      birthday:'2022-11-04', adopted:'2023-01-15', tags:['热情','摇尾巴冠军','不怕被嫌弃'], catchphrase:'今天也要热情地摇尾巴！',
+      appearance:'金色长毛、黑鼻头、永远摇着的大尾巴',
+      photo:'img/wangcai.jpg', aiPhoto:true, lockedStyle:'水彩', lockedImg:'img/wangcai.jpg',
+      styles:[{name:'水彩',img:'img/wangcai.jpg'}],
+      weightUnit:'kg', weights:[{m:'6月',v:28.2},{m:'7月',v:28.6},{m:'8月',v:29.0},{m:'9月',v:29.3},{m:'10月',v:29.6},{m:'11月',v:29.8}],
+      vax:[{icon:'💉',title:'犬八联',sub:'2025-11-04 · 爱宠动物医院（示例）',tag:'已完成'},
+           {icon:'💉',title:'狂犬疫苗',sub:'2025-11-04',tag:'已完成'}],
+      timeline:[{date:'2026-09-20',text:'第一次去公园，把树枝叼回了家'},{date:'2026-05-01',text:'学会握手'},{date:'2023-01-15',text:'到家第一天，把拖鞋也叼来了'}],
+      stickers:30, comics:4, roleTitle:'热情大使', roleMbti:'ESFP 汪', roleSkill:'捡树枝 ★★★★★ · 被嫌弃后秒恢复 ★★★★★', roleRel:'两只猫的追求者（单相思）'},
+    {id:'paopao', name:'泡泡', gender:'未知', species:'水族', breed:'金鱼', shortBreed:'金鱼', color:'c4', emoji:'🐠',
+      birthday:'2025-11-02', adopted:'2025-11-02', tags:['安静','喜欢气泡'], catchphrase:'咕噜咕噜。',
+      appearance:'橙红色、短身、游姿悠闲',
+      photo:'', aiPhoto:false, lockedStyle:'', lockedImg:'', styles:[],
+      weightUnit:'cm', weights:[{m:'6月',v:5.0},{m:'7月',v:5.5},{m:'8月',v:6.0},{m:'9月',v:6.5},{m:'10月',v:6.8},{m:'11月',v:7.0}],
+      vax:[{icon:'💧',title:'换水 1/3',sub:'每周一次（示例）',tag:'例行'},
+           {icon:'🫧',title:'清洗过滤器',sub:'上次 2026-10-28',tag:''}],
+      timeline:[{date:'2026-06-01',text:'第一次见到新水草'},{date:'2025-11-02',text:'泡泡到家'}],
+      stickers:4, comics:1, roleTitle:'缸中哲学家', roleMbti:'ISFP 鱼', roleSkill:'优雅巡游 ★★★★ · 气泡冥想 ★★★★★', roleRel:'家中最安静的一位'},
+    {id:'jiujiu', name:'啾啾', gender:'未知', species:'其他', breed:'虎皮鹦鹉', shortBreed:'虎皮鹦鹉', color:'c5', emoji:'🐦',
+      birthday:'2025-08-15', adopted:'2025-09-01', tags:['学舌','话多'], catchphrase:'你好！',
+      appearance:'黄绿相间、尾羽修长（人工繁育常见品种）',
+      photo:'', aiPhoto:false, lockedStyle:'', lockedImg:'', styles:[],
+      weightUnit:'g', weights:[{m:'6月',v:28},{m:'7月',v:29},{m:'8月',v:29},{m:'9月',v:30},{m:'10月',v:30},{m:'11月',v:31}],
+      vax:[{icon:'✂️',title:'修爪',sub:'下次 2026-11-18',tag:'待办'},
+           {icon:'🌾',title:'更换谷粮',sub:'每周检查新鲜度',tag:''}],
+      timeline:[{date:'2026-08-15',text:'学会说“你好”'},{date:'2025-09-01',text:'啾啾到家，先在笼子里观察大家'}],
+      stickers:8, comics:1, roleTitle:'家庭播报员', roleMbti:'ENTP 鸟', roleSkill:'学舌 ★★★★ · 晨间叫醒 ★★★★★', roleRel:'谁走过笼边，就跟谁打招呼'}
+  ];
+}
+function defaultState(){
+  return {
+    onboarded:false, vip:false, freeLeft:3, familyName:'糯米一家',
+    reminders:{med:true, worm:true, vax:true, bday:true, daily:false, wx:false},
+    pets:defaultPets(), notes:[], plan:'pack'
+  };
+}
+function loadState(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    if(!raw) return defaultState();
+    const s=JSON.parse(raw);
+    const base=defaultState();
+    const merged=Object.assign(base,s);
+    if(!Array.isArray(merged.pets) || !merged.pets.length) merged.pets=defaultPets();
+    if(!Array.isArray(merged.notes)) merged.notes=[];
+    merged.reminders=Object.assign(base.reminders, s.reminders||{});
+    return merged;
+  }catch(e){ return defaultState(); }
+}
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){ toast('本机存储空间不足，照片可能未保存'); } }
+function petById(id){ return state.pets.find(p=>p.id===id); }
+function uid(prefix){ return (prefix||'p')+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+function avHTML(p, size, opts){
+  opts=opts||{};
+  const r=size/2;
+  const src=opts.src || p.lockedImg || p.photo;
+  const ai=opts.ai!=null ? opts.ai : !!(src && (p.aiPhoto || (src+'').indexOf('img/')===0));
+  if(src){
+    return '<div class="pava" style="width:'+size+'px;height:'+size+'px;margin:'+(opts.center!==false?'0 auto 6px':'0')+'">'+
+      '<div class="aiw" style="width:'+size+'px;height:'+size+'px;border-radius:'+(opts.radius||'50%')+'">'+
+      '<img src="'+esc(src)+'" alt="">'+(ai?'<span class="ai">AI 生成</span>':'')+
+      '</div></div>';
+  }
+  return '<div class="av '+esc(p.color||'c1')+'" style="width:'+size+'px;height:'+size+'px;font-size:'+Math.round(size*0.55)+'px;border-radius:'+(opts.radius||'50%')+';margin:'+(opts.center!==false?'0 auto 6px':'0')+'">'+p.emoji+'</div>';
+}
+function weightSVG(p){
+  const ws=p.weights||[];
+  if(!ws.length) return '<p class="mini">还没有体重记录</p>';
+  const vs=ws.map(w=>w.v), min=Math.min.apply(null,vs), max=Math.max.apply(null,vs);
+  const pad= (max-min) < 0.2 ? 0.4 : (max-min)*0.25;
+  const lo=min-pad, hi=max+pad, span=hi-lo||1;
+  const n=ws.length, pts=ws.map((w,i)=>{
+    const x=20+(n===1?140: i*(280/(n-1)));
+    const y=90-((w.v-lo)/span)*70;
+    return {x,y,w};
+  });
+  const pl=pts.map(p=>p.x+','+p.y).join(' ');
+  const circles=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="4"/>').join('');
+  const labels=pts.map((p,i)=>{
+    let t='<text x="'+(p.x-10)+'" y="112">'+esc(p.w.m)+'</text>';
+    if(i===0) t+='<text x="'+(p.x-8)+'" y="'+(p.y-8)+'" fill="#f08a4b">'+p.w.v+'</text>';
+    if(i===n-1) t+='<text x="'+(p.x-16)+'" y="'+(p.y-8)+'" fill="#f08a4b">'+p.w.v+'</text>';
+    return t;
+  }).join('');
+  const unit=p.weightUnit||'kg';
+  const titleUnit = unit==='kg'?'近 6 个月 · kg':('近 6 个月 · '+unit);
+  return '<h3>'+(unit==='cm'?'📏 体长趋势':unit==='g'?'⚖️ 体重趋势':'⚖️ 体重趋势')+' <small>'+titleUnit+'</small></h3>'+
+    '<svg viewBox="0 0 320 120" width="100%"><polyline fill="none" stroke="#f08a4b" stroke-width="3" points="'+pl+'"/>'+
+    '<g fill="#f08a4b">'+circles+'</g><g font-size="10" fill="#999">'+labels+'</g></svg>';
+}
+
+function buildReminders(){
+  const items=[];
+  const t=today();
+  const medOn=state.reminders.med, wormOn=state.reminders.worm, vaxOn=state.reminders.vax, bdayOn=state.reminders.bday;
+  if(medOn && petById('meiqiu')){
+    items.push({icon:'💊', title:petById('meiqiu').name+' · 喂药（益生菌 半包）', sub:'今天 08:00 · 已完成 ✓', act:''});
+  }
+  const mq=petById('meiqiu');
+  if(wormOn && mq){
+    const d='2026-11-15';
+    items.push({icon:'🪱', title:mq.name+' · 体外驱虫', sub:relDate(d), act:''});
+  }
+  const wc=petById('wangcai');
+  if(bdayOn && wc){
+    const b=parseISO(wc.birthday); b.setFullYear(t.getFullYear());
+    let ds=isoDate(b); let n=dayDiff(ds);
+    if(n < -20){ b.setFullYear(t.getFullYear()+1); ds=isoDate(b); n=dayDiff(ds); }
+    const age=ageText(wc.birthday);
+    if(n>=0 && n<=14) items.push({icon:'🎂', title:wc.name+' '+age+' 生日倒数 <b style="color:#f05a3b">'+n+'</b> 天', sub:cnDate(parseISO(ds),true)+' · 先做张贺卡？', act:'card'});
+    else if(n>=-14 && n<0) items.push({icon:'🎂', title:wc.name+' 刚过了 '+age+' 生日', sub:cnDate(parseISO(ds),true)+' · 贺卡还在不？', act:'card'});
+  }
+  if(vaxOn){
+    const nu=petById('nuomi');
+    if(nu) items.push({icon:'💉', title:nu.name+' · 猫三联加强针', sub:'已于 11月2日完成 ✓', act:''});
+  }
+  const pp=petById('paopao');
+  if(pp) items.push({icon:'🐠', title:'泡泡鱼缸换水 1/3', sub:'今天 20:00', act:''});
+  const jj=petById('jiujiu');
+  if(jj){
+    const d='2026-11-18';
+    if(dayDiff(d)>=-2) items.push({icon:'✂️', title:'啾啾 · 修爪', sub:relDate(d), act:''});
+  }
+  return items;
+}
+
+function todaysSign(){
+  const t=today();
+  const idx=Math.floor((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())/86400000)) % SIGNS.length;
+  const s=SIGNS[idx];
+  const p=petById(s.id) || state.pets[0];
+  return Object.assign({}, s, {pet:p});
+}
+
+function allMoments(petId){
+  const list=[];
+  state.pets.forEach(p=>{
+    if(petId && p.id!==petId) return;
+    (p.timeline||[]).forEach(ev=>list.push({date:ev.date, text:ev.text, pet:p, photo:ev.photo, kind:'growth'}));
+  });
+  state.notes.forEach(n=>{
+    if(petId && n.petId!==petId) return;
+    const p=petById(n.petId);
+    list.push({date:n.date, text:n.text, pet:p, photo:n.photo, kind:'note'});
+  });
+  list.sort((a,b)=> a.date<b.date?1:a.date>b.date?-1:0);
+  return list;
+}
+
+/* ---------- renderers ---------- */
+function renderHome(){
+  const el=document.getElementById('home');
+  const sign=todaysSign();
+  const p=sign.pet;
+  const pets=state.pets.map(x=>'<div class="pet" data-open-pet="'+esc(x.id)+'">'+avHTML(x,58)+'<p>'+esc(x.name)+'</p><span>'+esc(petSub(x))+'</span></div>').join('');
+  const reminders=buildReminders().map(r=>{
+    const btn=r.act==='card'?'<button class="chip on" data-card="1">做贺卡</button>':'';
+    return '<div class="li">'+r.icon+'<div class="t">'+r.title+'<small>'+r.sub+'</small></div>'+btn+'</div>';
+  }).join('');
+  el.innerHTML=
+    '<div class="demo">⚠️ 本页所有宠物与数据均为示例数据，部分记录可在本机修改</div>'+
+    '<h3>🏡 '+esc(state.familyName)+' <small data-go="family">'+state.pets.length+' 位毛孩子 · 管理家庭 ›</small></h3>'+
+    '<div class="row" style="margin-bottom:12px">'+pets+'</div>'+
+    '<div class="card" style="background:linear-gradient(135deg,#fff1e0,#ffe0c8)"><h3>☀️ 今天的毛孩子 <small>'+cnDate(today(),true)+'</small></h3>'+
+    '<div style="display:flex;gap:12px;align-items:center">'+avHTML(p,108,{radius:'16px',center:false})+
+    '<div><div style="font-size:11px;color:#c0703a">今日萌宠日签 · 主角：'+esc(p.name)+'</div>'+
+    '<div style="font-size:16px;font-weight:700;margin:4px 0">“'+esc(sign.quote)+'”</div>'+
+    '<div class="mini">心情：'+sign.mood+'<br>“'+esc(sign.line)+'”</div>'+
+    '<div class="mini" style="color:#c0703a">宜：'+esc(sign.yi)+' · 忌：'+esc(sign.ji)+'</div></div></div>'+
+    '<button class="btn o" data-go="poster" style="margin-top:10px">把日签分享给朋友</button></div>'+
+    '<div class="card"><h3>⏰ 今日提醒 <small data-go="remind" style="color:#f08a4b">提醒设置 ›</small></h3>'+reminders+'</div>'+
+    '<div class="card"><h3>✨ 快捷入口</h3><div class="grid">'+
+    '<div data-go="studio"><b>🎨</b>AI 形象</div><div data-go="sticker"><b>😹</b>表情包</div>'+
+    '<div data-go="comic"><b>📖</b>漫画贺卡</div><div data-album="1"><b>📔</b>纪念册</div>'+
+    '<div data-go="wiki"><b>📚</b>百科工具</div><div data-go="shop"><b>🛍️</b>好物</div>'+
+    '<div data-go="remind"><b>⏰</b>提醒</div><div data-go="journal"><b>📝</b>记一笔</div>'+
+    '</div></div>';
+}
+
+function renderPet(){
+  const el=document.getElementById('pet');
+  const familyAlbum = viewPetId==='__all__';
+  const p=familyAlbum? null : petById(viewPetId) || state.pets[0];
+  document.getElementById('pet').dataset.t = familyAlbum? '成长纪念册' : ((p?p.name:'宠物')+'的主页');
+  const moments=allMoments(familyAlbum?null:(p&&p.id));
+  const tl=moments.length? moments.map(m=>{
+    const who=familyAlbum && m.pet? esc(m.pet.name)+' · ' : '';
+    const img=m.photo? '<img class="tl-photo" src="'+esc(m.photo)+'" alt="">' : '';
+    return '<div>'+esc(m.text)+'<small>'+who+esc(m.date)+(m.kind==='note'?' · 记一笔':'')+'</small>'+img+'</div>';
+  }).join('') : '<div class="mini">还没有记录，去记一笔吧</div>';
+  const monthLabel=(today().getMonth()+1);
+  let body;
+  if(familyAlbum || albumMode==='pa2'){
+    const head=familyAlbum? '' : '<div class="seg" id="petseg"><span data-album-tab="pa1">档案</span><span class="on" data-album-tab="pa2">纪念册</span></div>';
+    body=head+
+      '<div class="seg" id="alseg">'+
+        '<span'+(albumSub==='al1'?' class="on"':'')+' data-al="al1">时间线</span>'+
+        '<span'+(albumSub==='al2'?' class="on"':'')+' data-al="al2">月度回忆</span>'+
+        '<span'+(albumSub==='al3'?' class="on"':'')+' data-al="al3">年度总结</span></div>'+
+      (albumSub==='al1'? '<div class="card"><div class="tl">'+tl+'</div><button class="btn o" data-go="journal">+ 记录一个重要时刻</button></div>' : '')+
+      (albumSub==='al2'? '<div class="card"><h3>📅 '+today().getFullYear()+' 年 '+monthLabel+' 月回忆</h3>'+
+        '<div class="row"><div class="av c1" style="border-radius:12px;min-width:70px;height:70px">📸</div><div class="av c3" style="border-radius:12px;min-width:70px;height:70px">🎾</div><div class="av c2" style="border-radius:12px;min-width:70px;height:70px">🌙</div><div class="av c5" style="border-radius:12px;min-width:70px;height:70px">🍂</div></div>'+
+        '<p class="mini" style="margin-top:8px">本月共上传 86 张照片、12 条日记（示例统计）。最常出镜：旺财。最佳瞬间：两只猫第一次同时躺在金毛身上。</p>'+
+        '<button class="btn" data-toast="已生成可分享长图（示例）">生成分享长图</button></div>' : '')+
+      (albumSub==='al3'? '<div class="card" style="background:linear-gradient(#fff0e0,#fff)"><h3>🏆 '+esc(state.familyName)+' · '+today().getFullYear()+' 年度总结</h3>'+
+        '<table><tr><td>📸 记录照片</td><td><b>1,024</b> 张</td></tr><tr><td>🎂 一起过的生日</td><td>4 个</td></tr><tr><td>⚖️ 糯米体长变化</td><td>示例 +0.9 kg</td></tr><tr><td>🏥 就医</td><td>2 次，均已康复</td></tr><tr><td>😹 生成表情包</td><td>72 张</td></tr></table></div>' : '')+
+      '<div class="card"><h3>📕 实体相册 <span class="soon">即将上线</span></h3><p class="mini">把纪念册印成精装实体相册 / 台历，30 页起，送给未来的自己。</p><button class="btn o" data-toast="实体相册即将上线，已为你登记预约">预约下单（¥ 129 起）</button></div>';
+    if(familyAlbum){ el.innerHTML='<div class="demo">示例数据 · 家庭纪念册，含你记下的瞬间</div>'+body; return; }
+    el.innerHTML='<div class="demo">示例数据 · 宠物纪念册，含你记下的瞬间</div>'+body; return;
+  }
+  const styles=(p.styles||[]).slice(0,3).map(s=>'<div class="aiw" style="width:72px;height:72px;border-radius:14px"><img src="'+esc(s.img)+'" alt=""><span class="ai">AI 生成</span></div>').join('')
+    || avHTML(p,72,{radius:'14px',center:false});
+  const tags=(p.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('');
+  const vax=(p.vax||[]).map(v=>'<div class="li">'+v.icon+'<div class="t">'+esc(v.title)+'<small>'+esc(v.sub)+'</small></div>'+(v.tag?'<span class="tag">'+esc(v.tag)+'</span>':'')+'</div>').join('')||'<p class="mini">暂无记录</p>';
+  const growth=(p.timeline||[]).slice().sort((a,b)=>a.date<b.date?1:-1).concat(
+    state.notes.filter(n=>n.petId===p.id).map(n=>({date:n.date,text:n.text}))
+  ).sort((a,b)=>a.date<b.date?1:-1).slice(0,6).map(ev=>'<div>'+esc(ev.text)+'<small>'+esc(ev.date)+'</small></div>').join('');
+  el.innerHTML=
+    '<div class="demo">示例数据 · 宠物档案</div>'+
+    '<div class="seg" id="petseg"><span class="on" data-album-tab="pa1">档案</span><span data-album-tab="pa2">纪念册</span></div>'+
+    '<div class="card hero">'+avHTML(p,96)+'<div style="font-size:18px;font-weight:700">'+esc(p.name)+genderMark(p.gender)+'</div>'+
+    '<div class="mini">'+esc(p.breed)+(p.birthday?' · 生日 '+esc(p.birthday):'')+(p.adopted?' · 领养日 '+esc(p.adopted):'')+'</div>'+
+    '<div>'+tags+'</div></div>'+
+    '<div class="card"><h3>🎨 专属 AI 形象 <small data-go="studio">重新定妆 ›</small></h3>'+
+    '<div style="display:flex;gap:12px;align-items:center"><div style="display:flex;gap:6px">'+styles+'</div>'+
+    '<div class="mini">'+(p.lockedStyle?esc(p.lockedStyle):'尚未锁定形象')+'<br>口头禅：“'+esc(p.catchphrase||'')+'”<br>已生成 '+(p.stickers||0)+' 张表情包 · '+(p.comics||0)+' 页漫画</div></div></div>'+
+    '<div class="card">'+weightSVG(p)+'</div>'+
+    '<div class="card"><h3>💉 疫苗与就医</h3>'+vax+'</div>'+
+    '<div class="card"><h3>🌱 成长记录 <small data-album="pet">纪念册 ›</small></h3><div class="tl">'+(growth||'<p class="mini">还没有记录</p>')+'</div></div>';
+}
+
+function renderFamily(){
+  const el=document.getElementById('family');
+  const rows=state.pets.map(p=>'<div class="fam-row">'+avHTML(p,48,{center:false})+
+    '<div class="t" style="flex:1"><b>'+esc(p.name)+genderMark(p.gender)+'</b><div class="mini">'+esc(p.breed)+' · '+esc(ageText(p.birthday)||'')+'</div></div>'+
+    '<span class="chip" data-edit-pet="'+esc(p.id)+'">编辑</span></div>').join('');
+  el.innerHTML='<div class="demo">在这里管理家里的毛孩子，改动会立刻出现在首页</div>'+
+    '<div class="card"><h3>'+esc(state.familyName)+' <small>'+state.pets.length+' 位</small></h3>'+rows+'</div>'+
+    '<button class="btn" data-edit-pet="new">+ 新增宠物</button>';
+}
+
+function renderPetEdit(){
+  const el=document.getElementById('petedit');
+  const isNew=editPetId==='new';
+  const p=isNew? {name:'',gender:'未知',species:'猫',breed:'',birthday:'',tags:[],color:'c1',emoji:'🐱',photo:'',appearance:''} : (petById(editPetId)||{});
+  document.getElementById('petedit').dataset.t = isNew? '新增宠物' : '编辑档案';
+  const genders=['♀','♂','未知'].map(g=>'<span class="chip'+(p.gender===g?' on':'')+'" data-edit-field="gender" data-v="'+g+'">'+g+(g==='♀'?' 女生':g==='♂'?' 男生':'')+'</span>').join('');
+  const species=['猫','狗','水族','其他'].map(s=>'<span class="chip'+(p.species===s?' on':'')+'" data-edit-field="species" data-v="'+s+'">'+s+'</span>').join('');
+  const allTags=['话痨','干饭王','高冷','粘人','胆小','热情','学舌','安静','夜间活动'];
+  const tags=allTags.map(t=>'<span class="chip'+((p.tags||[]).indexOf(t)>=0?' on':'')+'" data-edit-field="tag" data-v="'+t+'">'+t+'</span>').join('');
+  const av = p.photo? '<img src="'+esc(p.photo)+'" alt="" style="width:72px;height:72px;border-radius:50%;object-fit:cover">'
+    : '<div class="av '+(p.color||'c1')+'" style="width:72px;height:72px;font-size:36px">'+ (p.emoji||'🐾')+'</div>';
+  el.innerHTML='<div class="card">'+
+    '<div style="text-align:center;margin-bottom:8px" id="editAv">'+av+'</div>'+
+    '<div class="upload" id="editUpload" style="padding:14px">📷 上传或更换头像<br><small>仅本机预览，不会上传到服务器</small></div>'+
+    '<div class="lab">名字</div><input id="edName" value="'+esc(p.name||'')+'">'+
+    '<div class="lab">生日</div><input id="edBday" type="date" value="'+esc(p.birthday||'')+'">'+
+    '<div class="lab">性别</div><div class="chips" data-single data-group="edGender">'+genders+'</div>'+
+    '<div class="lab">品类</div><div class="chips" data-single data-group="edSpecies">'+species+'</div>'+
+    '<div class="lab">品种</div><input id="edBreed" value="'+esc(p.breed||'')+'">'+
+    '<div class="lab">性格</div><div class="chips" data-group="edTags">'+tags+'</div>'+
+    '<button class="btn" id="btnSavePet">保存</button>'+
+    (isNew?'':'<button class="btn d" id="btnDelPet">删除这只宠物</button>')+
+    '</div>';
+  el._photo = p.photo||'';
+  el._ai = !!p.aiPhoto;
+}
+
+function renderJournal(){
+  const el=document.getElementById('journal');
+  const opts=state.pets.map(p=>'<option value="'+esc(p.id)+'"'+(viewPetId&&viewPetId===p.id?' selected':'')+'>'+esc(p.name)+'</option>').join('');
+  el.innerHTML='<div class="demo">记下今天的小事，会出现在对应宠物的纪念册里</div>'+
+    '<div class="card">'+
+    '<div class="lab">宠物</div><select id="jPet">'+opts+'</select>'+
+    '<div class="lab">日期</div><input id="jDate" type="date" value="'+isoDate(today())+'">'+
+    '<div class="lab">这一刻</div><textarea id="jText" placeholder="例如：旺财今天把树枝叼回了家"></textarea>'+
+    '<div class="lab">照片（可选）</div>'+
+    '<div class="upload" id="jUpload" style="padding:16px">📷 添加一张照片</div>'+
+    '<button class="btn" id="btnSaveNote">保存这一刻</button></div>';
+  journalPhoto=null;
+}
+
+function renderRemind(){
+  const el=document.getElementById('remind');
+  const r=state.reminders;
+  const row=(icon,title,sub,key)=>'<div class="li">'+icon+'<div class="t">'+title+'<small>'+sub+'</small></div><span class="sw'+(r[key]?'':' off')+'" data-sw="'+key+'"></span></div>';
+  el.innerHTML='<div class="card"><h3>提醒项目</h3>'+
+    row('💊','喂药提醒','煤球 · 每天 08:00','med')+
+    row('🪱','驱虫提醒','体内每 3 个月 · 体外每月','worm')+
+    row('💉','疫苗提醒','提前 3 天','vax')+
+    row('🎂','生日 / 领养纪念日','提前 7 天 · 附赠贺卡','bday')+
+    row('☀️','每日萌宠日签','每天 09:00','daily')+
+    '</div><div class="card"><h3>接收方式</h3><p class="mini">通过微信「服务通知」提醒你，不需要额外下载 App。'+(r.wx?' 已开启微信提醒。':'')+'</p>'+
+    '<button class="btn g" id="btnWx">开启微信提醒</button></div>';
+}
+
+function renderMe(){
+  const el=document.getElementById('me');
+  const badge=state.vip? '<span class="tag" data-go="vip">Plus 会员</span>' : '<span class="tag" data-go="vip">免费版 ›</span>';
+  el.innerHTML='<div class="card" style="display:flex;gap:12px;align-items:center"><div class="av c3">🙂</div>'+
+    '<div style="flex:1"><b>Even（示例账号）</b><div class="mini">'+esc(state.familyName)+'的家长 · 已记录 1,203 天</div></div>'+badge+'</div>'+
+    '<div class="card"><div class="grid" style="grid-template-columns:repeat(4,1fr)">'+
+    '<div><b>🐾</b>'+state.pets.length+' 宠物</div><div><b>🎨</b>96 作品</div><div><b>❤️</b>2.3k 获赞</div><div><b>⭐</b>18 收藏</div></div></div>'+
+    '<div class="card">'+
+    '<div class="li" data-go="family">🐾<div class="t">宠物档案管理</div>›</div>'+
+    '<div class="li" data-toast="家庭共享：邀请家人一起记录（会员功能，本 Demo 仅作说明）">👨‍👩‍👧<div class="t">家庭成员共享</div>›</div>'+
+    '<div class="li" data-go="remind">⏰<div class="t">提醒设置</div>›</div>'+
+    '<div class="li" data-album="1">📔<div class="t">我的纪念册</div>›</div>'+
+    '<div class="li" data-go="sticker">😹<div class="t">我的表情包</div>›</div>'+
+    '<div class="li" data-go="vip">👑<div class="t">会员中心</div>›</div>'+
+    '<div class="li" data-go="shop">🛍️<div class="t">好物与订单 <span class="soon">演示内容</span></div>›</div>'+
+    '<div class="li" data-go="wiki">📚<div class="t">百科与工具 <span class="soon">演示内容</span></div>›</div>'+
+    '<div class="li" data-toast="演示数据仅保存在本机浏览器中，可在设置里重置">📦<div class="t">数据导出</div>›</div>'+
+    '<div class="li" id="btnReplay">🌱<div class="t">重新体验新手引导</div>›</div>'+
+    '<div class="li" data-go="settings">⚙️<div class="t">设置 · 隐私 · 帮助</div>›</div>'+
+    '</div><p class="mini" style="text-align:center">毛孩子数字生活 v0.3 Demo · 所有内容为示例数据</p>';
+}
+
+function renderVip(){
+  const el=document.getElementById('vip');
+  const status=state.vip? '当前为演示开通状态，可体验高清导出与全部风格' : '基础功能永久免费，创作更尽兴';
+  el.innerHTML='<div class="signbar"><div class="big">👑</div><div><div style="font-size:17px;font-weight:700">毛孩子 Plus 会员</div><div style="font-size:12px">'+status+'</div></div></div>'+
+    '<div class="card"><h3>免费 vs 会员</h3><table><tr><th>模块</th><th>免费</th><th>会员</th></tr>'+
+    '<tr><td>纪念册</td><td>档案·照片·日记</td><td>高级模板、精美回忆册</td></tr>'+
+    '<tr><td>AI 形象</td><td>每日 3 次</td><td>全部风格、不限次数、高清导出</td></tr>'+
+    '<tr><td>社区</td><td>浏览·分享作品</td><td>创作者工具、装饰</td></tr>'+
+    '<tr><td>多宠家庭</td><td>基础管理</td><td>家庭共享、批量导出</td></tr></table></div>'+
+    '<div class="plan'+(state.plan==='month'?' on':'')+'" data-plan="month"><b>连续包月</b> <span class="price">¥ 15/月</span><div class="mini">首月 ¥ 6，可随时取消</div></div>'+
+    '<div class="plan'+(state.plan==='year'?' on':'')+'" data-plan="year"><b>年卡</b> <span class="price">¥ 128/年</span><div class="mini">送 1 本电子年度回忆册</div></div>'+
+    '<div class="plan'+(state.plan==='pack'?' on':'')+'" data-plan="pack"><b>单次加油包</b> <span class="price">¥ 9.9</span><div class="mini">一套表情包 + 高清导出 + 10 次生成</div></div>'+
+    '<button class="btn g" id="btnVipPay">'+(state.vip?'再次演示支付（不会扣费）':'微信支付 开通')+'</button>'+
+    (state.vip?'<p class="mini" style="text-align:center;margin-top:8px">已在本机标记为会员（演示）</p>':'');
+}
+
+function renderSettings(){
+  const el=document.getElementById('settings');
+  el.innerHTML='<div class="card"><h3>关于本 Demo</h3>'+
+    '<p class="mini">「毛孩子数字生活」是一份可点击的 HTML 演示，不是已上线的微信小程序，也不会调用真实 AI 或支付接口。生成结果、百科、好物和社区内容都是示例数据，用来走通产品流程。</p>'+
+    '<p class="mini" style="margin-top:6px">版本 v0.3 · 界面中的「AI 生成」水印表示该图为示例生成图。</p></div>'+
+    '<div class="card"><h3>隐私说明</h3>'+
+    '<p class="mini">你在本演示里填写的名字、生日、性格，以及用相机或相册选择的照片，只会通过浏览器保存在这台设备的 localStorage 中，不会上传到任何服务器。请避免在公共电脑留下包含隐私的照片。可随时在下方重置，清除本机演示数据。</p></div>'+
+    '<div class="card"><h3>帮助</h3>'+
+    '<p class="mini">首次打开会进入三步引导。完成后可在「我的」重新体验。档案、记一笔、提醒开关、免费次数和会员演示状态都会被记住。若页面表现异常，可尝试重置演示数据。</p></div>'+
+    '<button class="btn d" id="btnReset">重置演示数据</button>';
+}
+
+function renderShop(){
+  const el=document.getElementById('shop');
+  const cats=['为糯米一家推荐','猫粮','狗粮','猫砂','水族','鸟用品'];
+  const chips=cats.map(c=>'<span class="chip'+(shopCat===c?' on':'')+'" data-shop-cat="'+c+'">'+c+'</span>').join('');
+  const key=shopCat==='为糯米一家推荐'?'推荐':shopCat;
+  const list=GOODS.filter(g=>g.cats.indexOf(key)>=0);
+  const cards=list.map(g=>'<div><b>'+g.emoji+'</b>'+esc(g.name)+'<br><span class="price">'+g.price+'</span> · '+esc(g.desc)+'</div>').join('')
+    || '<p class="mini">这一类暂时没有示例商品</p>';
+  el.innerHTML='<div class="card" style="text-align:center"><span class="soon">演示内容</span><p class="mini">真实用户使用感受 · 不做付费排名（示例商品，无品牌，不可下单）</p></div>'+
+    '<div class="chips" data-single data-group="shopCat">'+chips+'</div>'+
+    '<div class="goods">'+cards+'</div>';
+}
+
+function renderPoster(){
+  const el=document.getElementById('poster');
+  const sign=todaysSign();
+  el.innerHTML='<div class="poster"><div style="font-size:12px;color:#c0703a">毛孩子数字生活 · 我家毛孩子的专属形象</div>'+
+    '<div class="aiw" style="height:230px;border-radius:14px;margin:10px 0"><img src="img/family.jpg" alt=""><span class="ai">AI 生成</span></div>'+
+    '<div style="font-size:17px;font-weight:700">'+esc(state.familyName)+' · 两猫嫌弃，一狗热情</div>'+
+    '<div class="mini">'+cnDate(today(),true)+' · '+esc(sign.quote)+'</div>'+
+    '<div style="display:flex;gap:12px;align-items:center;margin-top:12px;background:#fff9;border-radius:12px;padding:10px">'+
+    '<div class="qr"><svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="27" fill="#fff" stroke="#3b2f2a" stroke-dasharray="3 3"/><g fill="#3b2f2a"><rect x="14" y="14" width="3" height="3"/><rect x="14" y="19" width="3" height="3"/><rect x="14" y="29" width="3" height="3"/><rect x="14" y="34" width="3" height="3"/><rect x="19" y="14" width="3" height="3"/><rect x="19" y="19" width="3" height="3"/><rect x="19" y="29" width="3" height="3"/><rect x="19" y="34" width="3" height="3"/><rect x="29" y="14" width="3" height="3"/><rect x="29" y="19" width="3" height="3"/><rect x="29" y="29" width="3" height="3"/><rect x="29" y="34" width="3" height="3"/><rect x="34" y="14" width="3" height="3"/><rect x="34" y="19" width="3" height="3"/><rect x="34" y="29" width="3" height="3"/><rect x="34" y="34" width="3" height="3"/></g></svg></div>'+
+    '<div style="font-size:12px"><b>长按识别小程序码</b><br><span class="mini">用你家毛孩子做同款 →<br>（小程序码占位）</span></div></div></div>'+
+    '<div style="display:flex;gap:8px"><button class="btn g" data-toast="海报已保存到相册（示例）">保存到相册</button><button class="btn" data-toast="已发送给微信好友（示例）">发给朋友</button></div>'+
+    '<button class="btn o" data-go="same">预览：朋友扫码后看到的「做同款」页</button>';
+}
+
+function renderStudioBits(){
+  const box=document.getElementById('studioPets');
+  if(!box) return;
+  const cur=box.querySelector('.chip.on');
+  const curId=cur? cur.dataset.id : (viewPetId && viewPetId!=='__all__'? viewPetId : (state.pets[0]&&state.pets[0].id));
+  box.innerHTML=state.pets.map(p=>'<span class="chip'+(p.id===curId?' on':'')+'" data-id="'+esc(p.id)+'">'+esc(p.name)+'</span>').join('');
+  const p=petById(curId)||state.pets[0];
+  if(p) document.getElementById('studioFeat').value=p.appearance||'';
+  updateFreeLabel();
+  const up=document.getElementById('studioUpload');
+  if(studioPhoto){
+    up.innerHTML='<img src="'+studioPhoto+'" alt="预览"><div>已选择照片（仅本机预览）<br><small>再点一次可更换</small></div>';
+  }
+}
+
+function updateFreeLabel(){
+  const span=document.getElementById('freeCount');
+  const btn=document.getElementById('btnGen');
+  if(!span||!btn) return;
+  if(state.vip){ span.parentNode && (btn.innerHTML='✨ 生成定妆形象（会员不限次数）'); }
+  else btn.innerHTML='✨ 生成定妆形象（今日免费剩 <span id="freeCount">'+state.freeLeft+'</span> 次）';
+}
+
+function renderStickerPets(){
+  const box=document.getElementById('stPetChips');
+  if(!box) return;
+  box.innerHTML=state.pets.map((p,i)=>'<span class="chip'+(i<3?' on':'')+'">'+p.emoji+esc(p.name)+'</span>').join('');
+}
+
+function renderRolePets(){
+  const box=document.getElementById('rolePetChips');
+  if(!box) return;
+  const cur= (petById('meiqiu')||state.pets[0]);
+  box.innerHTML=state.pets.map(p=>'<span class="chip'+(p.id===cur.id?' on':'')+'" data-id="'+esc(p.id)+'">'+esc(p.name)+'</span>').join('');
+  fillRoleCard(cur.id);
+}
+
+function fillRoleCard(id){
+  const p=petById(id)||state.pets[0];
+  const el=document.getElementById('rolePreview');
+  if(!el||!p) return;
+  el.innerHTML='<span class="ai">AI 生成</span><div style="display:flex;gap:12px">'+avHTML(p,64,{radius:'14px',center:false})+
+    '<div><b>'+esc(p.name)+' · '+esc(p.roleTitle||'家庭成员')+'</b><div class="mini">'+esc(p.breed)+' · '+esc(ageText(p.birthday))+' · '+esc(p.roleMbti||'')+'</div></div></div>'+
+    '<p class="mini" style="margin-top:8px">口头禅：“'+esc(p.catchphrase||'')+'”<br>关系：'+esc(p.roleRel||'')+'<br>技能：'+esc(p.roleSkill||'')+'</p>';
+}
+
+function fillCard(type){
+  const hint=document.getElementById('cardHint');
+  const box=document.getElementById('cardPreview');
+  const wc=petById('wangcai')||state.pets[0];
+  const nu=petById('nuomi')||state.pets[0];
+  if(hint) hint.textContent='已从档案读取：'+(wc?wc.name+' 生日 '+(wc.birthday||'')+' · ':'')+(nu?nu.name+' 领养纪念日 '+(nu.adopted||''):'');
+  const map={
+    '生日':{bg:'linear-gradient(#ffe7b3,#ffc98f)', pet:wc, emoji:'🎂', title:(wc?wc.name:'旺财')+' '+ageText(wc&&wc.birthday)+' 生日快乐！', sub:'愿你永远热情、永远有肉骨头 —— '+state.familyName, color:'#8a4b17'},
+    '领养纪念日':{bg:'linear-gradient(#ffe6d3,#ffc4a8)', pet:nu, emoji:'🏠', title:(nu?nu.name:'糯米')+' 到家纪念日', sub:'从沙发底下，走到我们心里 —— '+state.familyName, color:'#8a4b17'},
+    '春节':{bg:'linear-gradient(#ffd0c8,#ff8f7a)', pet:nu, emoji:'🧧', title:'新春快乐，'+state.familyName+'！', sub:'愿新的一年都有饭、都有阳光', color:'#7a1f12'},
+    '中秋':{bg:'linear-gradient(#fff1c2,#f0c36a)', pet:wc, emoji:'🌕', title:'中秋快乐', sub:'月圆之夜，'+state.familyName+' 也要团团圆圆', color:'#7a4a10'},
+    '圣诞':{bg:'linear-gradient(#e4f5e8,#b8e0c0)', pet:petById('meiqiu')||nu, emoji:'🎄', title:'圣诞快乐', sub:'袜子里也许会有猫条和肉骨头', color:'#1f5a32'}
+  };
+  const c=map[type]||map['生日'];
+  box.style.background=c.bg;
+  box.innerHTML='<span class="ai">AI 生成</span>'+
+    '<div style="width:120px;height:120px;margin:0 auto 8px;border-radius:50%;border:4px solid #fff;overflow:hidden">'+avHTML(c.pet,112,{radius:'50%'})+'</div>'+
+    '<div style="font-size:30px">'+c.emoji+'</div>'+
+    '<div style="font-size:20px;font-weight:700;color:'+c.color+'">'+esc(c.title)+'</div>'+
+    '<div class="mini" style="color:'+c.color+'">'+esc(c.sub)+'</div>';
+}
+
+function renderArticle(key){
+  const a=ARTICLES[key];
+  const el=document.getElementById('article');
+  if(!a){ el.innerHTML='<div class="card"><p>未找到这篇文章</p></div>'; el.dataset.t='百科文章'; return; }
+  el.dataset.t=a.title;
+  el.innerHTML='<div class="card"><div class="article"><h3>'+esc(a.title)+'</h3>'+a.body+'</div></div>'+
+    '<p class="mini" style="text-align:center">内容仅为 Demo 示例，不能替代正规兽医或法律意见</p>';
+}
+
+function feedR(k){
+  const arr=POSTS[k]||POSTS['推荐'];
+  document.getElementById('feed').innerHTML=arr.map(p=>{
+    const img=p[6]? '<img src="img/'+p[6]+'" style="width:100%;height:100%;object-fit:contain" alt="">' : p[0];
+    const ai=(p[6]||k==='AI 创作')?'<span class="ai">AI 生成</span>':'';
+    return '<div class="post"><div class="img relp" style="background:'+p[2]+';height:'+p[3]+'px">'+img+ai+'</div><p>'+p[1]+'</p><small><span>'+p[4]+'</span><span>♡ '+p[5]+'</span></small></div>';
+  }).join('');
+}
+
+function calcFeed(){
+  const kg=parseFloat((document.getElementById('kg')||{}).value)||0;
+  const el=document.getElementById('cres');
+  if(!el) return;
+  el.textContent='每日建议热量约 '+Math.round(70*Math.pow(kg,0.75)*feedFactor)+' kcal ≈ 干粮 '+Math.round(70*Math.pow(kg,0.75)*feedFactor/3.8)+' g';
+}
+
+/* ---------- navigation ---------- */
+function show(id){
+  const page=document.getElementById(id);
+  if(!page) return;
+  document.getElementById('tab').style.display = (id==='onboard')?'none':'flex';
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on', p.id===id));
+  const tmap=TAB_OF[id];
+  if(tmap) lastTab=tmap;
+  document.querySelectorAll('#tab div').forEach(t=>t.classList.toggle('on', t.dataset.p===(tmap||lastTab)));
+  document.querySelector('.back').style.display = (TAB_ROOTS.indexOf(id)>=0 || id==='onboard' && hist.length===0) ? 'none' : 'block';
+  if(id==='onboard' && hist.length) document.querySelector('.back').style.display='block';
+  const renderers={home:renderHome,pet:renderPet,family:renderFamily,petedit:renderPetEdit,journal:renderJournal,remind:renderRemind,me:renderMe,vip:renderVip,settings:renderSettings,shop:renderShop,poster:renderPoster};
+  if(renderers[id]) renderers[id]();
+  if(id==='studio') renderStudioBits();
+  if(id==='sticker') renderStickerPets();
+  if(id==='comic'){ renderRolePets(); fillCard(chipVal('cardType')||'生日'); }
+  if(id==='find' && !document.getElementById('feed').innerHTML) feedR('推荐');
+  document.getElementById('title').textContent = page.dataset.t || '';
+  document.getElementById('body').scrollTop=0;
+}
+function go(id){
+  const cur=document.querySelector('.page.on');
+  if(cur) hist.push(cur.id);
+  show(id);
+}
+function back(){ show(hist.pop() || 'home'); }
+
+function toast(m){
+  const el=document.getElementById('toast');
+  el.textContent=m; el.style.display='block';
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.style.display='none',1700);
+}
+function mask(id){ document.getElementById(id).classList.add('on'); }
+function unmask(){ document.querySelectorAll('.mask').forEach(m=>m.classList.remove('on')); }
+function paywall(){ mask('pay'); }
+function askConfirm(title,msg,ok,cb){
+  document.getElementById('cfmTitle').textContent=title;
+  document.getElementById('cfmMsg').textContent=msg;
+  document.getElementById('cfmYes').textContent=ok||'确定';
+  confirmCb=cb; mask('cfm');
+}
+
+function chipVal(group){
+  const el=document.querySelector('[data-group="'+group+'"] .chip.on');
+  return el? (el.dataset.v || el.textContent.trim()) : '';
+}
+function selectedChips(group){
+  return [...document.querySelectorAll('[data-group="'+group+'"] .chip.on')].map(x=>x.dataset.v||x.textContent.trim());
+}
+
+function pickImage(cb){
+  fileCb=cb;
+  const inp=document.getElementById('filePick');
+  inp.value='';
+  inp.click();
+}
+function readImage(file, maxW, cb){
+  const r=new FileReader();
+  r.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const scale=Math.min(1, maxW/img.width);
+      const c=document.createElement('canvas');
+      c.width=Math.max(1,Math.round(img.width*scale));
+      c.height=Math.max(1,Math.round(img.height*scale));
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      cb(c.toDataURL('image/jpeg',0.82));
+    };
+    img.onerror=()=>cb(r.result);
+    img.src=r.result;
+  };
+  r.readAsDataURL(file);
+}
+
+/* ---------- flows ---------- */
+function ob(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('ob'+i).classList.toggle('on', i===n);
+    document.getElementById('sp'+i).classList.toggle('on', i<=n);
+  });
+  if(n===2){
+    const res=document.getElementById('obres');
+    const pg=document.getElementById('pg');
+    const obt=document.getElementById('obt');
+    res.style.display='none';
+    pg.style.width='0';
+    obt.textContent='识别毛色、脸型、眼睛颜色…';
+    setTimeout(()=>pg.style.width='100%',50);
+    setTimeout(()=>obt.textContent='生成专属卡通形象…',1000);
+    setTimeout(()=>{
+      obt.textContent='';
+      res.style.display='block';
+    },2300);
+  }
+}
+
+function finishOnboard(thenPoster){
+  const name=(document.getElementById('obName').value||'糯米').trim();
+  const bday=document.getElementById('obBday').value||'2023-05-20';
+  const tags=selectedChips('obTags').slice(0,3);
+  const species=chipVal('obSpecies')||'猫';
+  let p=petById('nuomi') || state.pets[0];
+  if(p){
+    p.name=name;
+    p.birthday=bday;
+    p.species=species;
+    if(tags.length) p.tags=tags;
+    if(onboardPhoto && !onboardUsedSample){
+      p.photo=onboardPhoto;
+      p.aiPhoto=false;
+    }
+    if(name!=='糯米' && state.familyName==='糯米一家') state.familyName=name+'一家';
+  }
+  state.onboarded=true;
+  save();
+  hist=[];
+  if(thenPoster) show('poster');
+  else show('home');
+  toast('档案已建好，欢迎回家');
+}
+
+function studioPetId(){
+  const c=document.querySelector('#studioPets .chip.on');
+  return c? c.dataset.id : (state.pets[0]&&state.pets[0].id);
+}
+
+function doGenerate(){
+  const style=selectedStyle;
+  if(style==='国潮' && !state.vip){ paywall(); return; }
+  if(!state.vip){
+    if(state.freeLeft<=0){ paywall(); return; }
+    state.freeLeft--;
+    save();
+    updateFreeLabel();
+  }
+  toast('AI 定妆中…（示例结果）');
+  setTimeout(()=>{
+    const p=petById(studioPetId())||state.pets[0];
+    const box=document.getElementById('resultStyles');
+    const opts = (p.styles&&p.styles.length? p.styles : [
+      {name:'日系手绘', img: p.photo||STYLE_IMGS['日系手绘']},
+      {name:'3D 软萌', img: p.photo||STYLE_IMGS['3D 软萌']},
+      {name:'水彩', img: p.photo||STYLE_IMGS['水彩']}
+    ]).slice(0,3);
+    if(style==='蜡笔童话'||style==='像素风'||style==='国潮'){
+      opts[0]=Object.assign({}, opts[0], {name:style});
+    }
+    resultStyle=opts[0].name;
+    box.innerHTML=opts.map((o,i)=>'<div class="'+(i===0?'on':'')+'" data-style="'+esc(o.name)+'" data-img="'+esc(o.img||'')+'">'+
+      (o.img? '<div class="aiw" style="height:100px;border-radius:8px"><img src="'+esc(o.img)+'" alt=""><span class="ai">AI 生成</span></div>' : '<b>'+(p.emoji||'🎨')+'</b>')+
+      esc(o.name)+'</div>').join('');
+    document.getElementById('result').style.display='block';
+    document.getElementById('result').scrollIntoView({behavior:'smooth', block:'nearest'});
+  },900);
+}
+
+function lockStyle(){
+  const p=petById(studioPetId());
+  if(!p) return;
+  const on=document.querySelector('#resultStyles .on');
+  const name=on? (on.dataset.style||resultStyle) : resultStyle;
+  const img=on? on.dataset.img : (p.photo||'');
+  p.lockedStyle=name;
+  if(img){ p.lockedImg=img; p.photo=p.photo||img; p.aiPhoto=true; }
+  if(!p.styles) p.styles=[];
+  if(img && !p.styles.some(s=>s.name===name)) p.styles.unshift({name,img});
+  save();
+  toast('已锁定为'+p.name+'的专属形象（'+name+'）');
+}
+
+function doStickers(){
+  const emo=chipVal('stEmo')||'开心';
+  const scene=chipVal('stScene')||'催饭';
+  const custom=(document.getElementById('stxt').value||'').trim() || SCENE_TXT[scene] || '饭呢？？';
+  const labels=[
+    EMO_TXT[emo]||emo,
+    SCENE_TXT[scene]||scene,
+    custom,
+    emo+'·'+scene,
+    ({开心:'笑出褶子',委屈:'哼，不理你',无语:'我无语了',震惊:'什么？！',撒娇:'再摸摸嘛'})[emo]||emo,
+    custom.length>6? custom.slice(0,6)+'…' : custom+'！'
+  ];
+  const is=document.querySelectorAll('#stkBox i');
+  is.forEach((el,i)=>{ if(labels[i]) el.textContent=labels[i]; });
+  const names=selectedChips('stPets');
+  const title=document.getElementById('stkTitle');
+  title.innerHTML=esc((names[0]||'毛孩子').replace(/^[^\u4e00-\u9fa5A-Za-z]+/, '') || '表情包')+'的表情包 <small>6 张 · 日系手绘</small>';
+  toast('已生成 6 张（示例）');
+}
+
+function doComic(){
+  const ev=(document.getElementById('comicEvent').value||'').trim() || '今天发生了一件小事';
+  toast('漫画生成中…（示例）');
+  setTimeout(()=>{
+    let title='《这一天》', cells;
+    if(/公园|树枝|草/.test(ev)){
+      title='《第一次去公园》';
+      cells=[['🐶🌳','哇！好大的草地！'],['🐶🪵','这根树枝是我的'],['🐶🚪🪵','带回家给猫看'],['😾😾','……拿走']];
+    }else if(/饭|吃|饿|碗/.test(ev)){
+      title='《饭呢》';
+      cells=[['🐱🕒','到点了吗'],['🐱🥣','碗还是空的'],['🐶🙂','我可以分享'],['🐱','谢谢，但不要']];
+    }else if(/睡|午|窝/.test(ev)){
+      title='《午睡公约》';
+      cells=[['🐶','挤一挤嘛'],['🐱','已占沙发'],['🐈‍⬛','再靠近试试'],['🐶💤','……还是地板吧']];
+    }else if(/说话|你好|学/.test(ev)){
+      title='《新学的词》';
+      cells=[['🐦','你好！'],['🙂','会说话了！'],['🐦','你好！你好！'],['🐱','……安静点']];
+    }else{
+      title='《'+ev.slice(0,8)+(ev.length>8?'…':'')+'》';
+      const short=ev.length>10? ev.slice(0,10)+'…':ev;
+      cells=[['🐾','故事开始'],['👀','认真发生了'],['💫',short],['🏠','记进纪念册']];
+    }
+    document.getElementById('comicTitle').innerHTML=esc(title)+' <small>4 格</small>';
+    document.getElementById('comicGrid').innerHTML=cells.map(c=>'<div>'+c[0]+'<i>'+esc(c[1])+'</i></div>').join('');
+    toast('漫画已生成（示例）');
+  },700);
+}
+
+function savePetFromForm(){
+  const isNew=editPetId==='new';
+  const name=(document.getElementById('edName').value||'').trim();
+  if(!name){ toast('请先起个名字'); return; }
+  const gender=chipVal('edGender')||'未知';
+  const species=chipVal('edSpecies')||'猫';
+  const breed=(document.getElementById('edBreed').value||'').trim() || species;
+  const birthday=document.getElementById('edBday').value||'';
+  const tags=selectedChips('edTags');
+  const photo=document.getElementById('petedit')._photo||'';
+  const emojiMap={猫:'🐱',狗:'🐶',水族:'🐠','其他':'🐾'};
+  const colorMap={猫:'c1',狗:'c3',水族:'c4','其他':'c5'};
+  if(isNew){
+    const p={id:uid('pet'), name, gender, species, breed, shortBreed: breed.length<=6?breed:species, color:colorMap[species]||'c6', emoji:emojiMap[species]||'🐾',
+      birthday, adopted: isoDate(today()), tags, catchphrase:'', appearance:'',
+      photo, aiPhoto:false, lockedStyle:'', lockedImg:photo, styles:[],
+      weightUnit:'kg', weights:[], vax:[], timeline:[{date:isoDate(today()), text:name+'加入了'+state.familyName}],
+      stickers:0, comics:0, roleTitle:'新成员', roleMbti:'', roleSkill:'', roleRel:'刚刚加入这个家'};
+    state.pets.push(p);
+  }else{
+    const p=petById(editPetId);
+    if(!p) return;
+    if(breed!==p.breed) p.shortBreed = breed.length<=6 ? breed : (p.shortBreed||p.species||breed);
+    p.name=name; p.gender=gender; p.species=species; p.breed=breed;
+    p.birthday=birthday; p.tags=tags;
+    if(photo){ p.photo=photo; if(!p.lockedImg) p.lockedImg=photo; }
+    p.emoji=emojiMap[species]||p.emoji;
+    if(!p.photo) p.color=colorMap[species]||p.color;
+  }
+  save();
+  toast('档案已保存');
+  hist.pop();
+  show('family');
+}
+
+function deletePet(){
+  if(state.pets.length<=1){ toast('至少保留一位毛孩子'); return; }
+  const p=petById(editPetId);
+  askConfirm('删除 '+((p&&p.name)||'这只宠物')+'？','删除后，它的档案和相关「记一笔」会从本机演示数据里移除。此操作不可撤销。','确认删除',()=>{
+    state.notes=state.notes.filter(n=>n.petId!==editPetId);
+    state.pets=state.pets.filter(x=>x.id!==editPetId);
+    save();
+    toast('已删除');
+    hist=hist.filter(id=>id!=='petedit');
+    show('family');
+  });
+}
+
+function saveNote(){
+  const petId=document.getElementById('jPet').value;
+  const text=(document.getElementById('jText').value||'').trim();
+  const date=document.getElementById('jDate').value||isoDate(today());
+  if(!text){ toast('先写一句这一刻吧'); return; }
+  state.notes.push({id:uid('n'), petId, text, date, photo:journalPhoto||''});
+  save();
+  const p=petById(petId);
+  toast('已记在'+(p?p.name:'纪念册')+'的时间线里');
+  viewPetId=petId; albumMode='pa2'; albumSub='al1';
+  show('pet');
+}
+
+function resetDemo(){
+  askConfirm('重置演示数据？','将清除本机保存的引导状态、档案修改、记一笔、提醒开关、免费次数和会员演示状态，并回到新手引导。','确认重置',()=>{
+    try{ localStorage.removeItem(LS_KEY); }catch(e){}
+    state=defaultState();
+    hist=[]; studioPhoto=null; journalPhoto=null; onboardPhoto=null; samePhoto=null;
+    viewPetId=null; albumMode='pa1'; shopCat='为糯米一家推荐';
+    document.getElementById('result').style.display='none';
+    show('onboard'); ob(1);
+    toast('已恢复示例家庭');
+  });
+}
+
+function fakePay(fromVip){
+  unmask();
+  const plan=state.plan||'pack';
+  if(plan==='pack') state.freeLeft += 10;
+  state.vip=true;
+  save();
+  updateFreeLabel();
+  toast('Demo 演示，不会真实扣费');
+  const cur=document.querySelector('.page.on');
+  if(cur && (cur.id==='vip'||cur.id==='me')) show(cur.id);
+}
+
+function sameGen(photo){
+  samePhoto=photo||null;
+  const up=document.getElementById('sameUpload');
+  if(photo) up.innerHTML='<img src="'+photo+'" alt="预览">已选择照片';
+  const bar=document.getElementById('samep'), spg=document.getElementById('spg'), res=document.getElementById('sameres');
+  bar.style.display='block'; res.style.display='none';
+  spg.style.transition='width 1.5s'; spg.style.width='0';
+  setTimeout(()=>spg.style.width='100%',50);
+  setTimeout(()=>{
+    bar.style.display='none';
+    res.style.display='block';
+    const img=document.querySelector('#sameResImg img');
+    if(photo && img) img.src=photo;
+    document.getElementById('sameHint').textContent= photo? '示例：用同款 3D 软萌模板生成的形象（示意，非真实 AI）' : '示例：你家「豆豆」（金毛）用同款模板生成的形象（示意）';
+  },1600);
+}
+
+/* ---------- events ---------- */
+document.getElementById('backBtn').onclick=back;
+document.getElementById('tab').addEventListener('click',e=>{
+  const t=e.target.closest('[data-p]'); if(!t) return;
+  hist=[]; show(t.dataset.p);
+});
+document.getElementById('filePick').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  readImage(f, 720, url=>{ if(fileCb) fileCb(url); });
+});
+document.getElementById('push').addEventListener('click',function(){ this.classList.remove('on'); });
+
+document.getElementById('phone').addEventListener('click',e=>{
+  const t=e.target;
+
+  if(t.closest && t.closest('#pay') && t.id==='pay') { unmask(); return; }
+  if(t.id==='wxm') { unmask(); return; }
+  if(t.id==='cfm') { unmask(); confirmCb=null; return; }
+
+  const goEl=t.closest('[data-go]');
+  if(goEl){ go(goEl.getAttribute('data-go')); return; }
+  const toastEl=t.closest('[data-toast]');
+  if(toastEl){ toast(toastEl.getAttribute('data-toast')); return; }
+
+  const openPet=t.closest('[data-open-pet]');
+  if(openPet){ viewPetId=openPet.getAttribute('data-open-pet'); albumMode='pa1'; go('pet'); return; }
+  const editPet=t.closest('[data-edit-pet]');
+  if(editPet){ editPetId=editPet.getAttribute('data-edit-pet'); go('petedit'); return; }
+  if(t.closest('[data-album]')){
+    const v=t.closest('[data-album]').getAttribute('data-album');
+    if(v==='pet' && viewPetId && viewPetId!=='__all__'){ albumMode='pa2'; albumSub='al1'; renderPet(); document.getElementById('title').textContent=document.getElementById('pet').dataset.t; document.getElementById('body').scrollTop=0; }
+    else { viewPetId='__all__'; albumMode='pa2'; albumSub='al1'; go('pet'); }
+    return;
+  }
+  if(t.closest('[data-card]')){ go('comic'); switchSub(document.querySelector('#comicSeg [data-sub="cm2"]'),'cm2'); setTimeout(()=>fillCard('生日'),0); return; }
+  const alTab=t.closest('[data-album-tab]');
+  if(alTab){ albumMode=alTab.getAttribute('data-album-tab'); renderPet(); document.getElementById('title').textContent=document.getElementById('pet').dataset.t; return; }
+  const al=t.closest('[data-al]');
+  if(al){ albumSub=al.getAttribute('data-al'); renderPet(); return; }
+
+  const sw=t.closest('[data-sw]');
+  if(sw){
+    const k=sw.getAttribute('data-sw');
+    state.reminders[k]=!state.reminders[k];
+    save();
+    sw.classList.toggle('off', !state.reminders[k]);
+    return;
+  }
+  const shopc=t.closest('[data-shop-cat]');
+  if(shopc){ shopCat=shopc.getAttribute('data-shop-cat'); renderShop(); return; }
+  const article=t.closest('[data-article]');
+  if(article){ renderArticle(article.getAttribute('data-article')); go('article'); return; }
+  const plan=t.closest('[data-plan]');
+  if(plan){
+    document.querySelectorAll('.plan').forEach(p=>p.classList.remove('on'));
+    plan.classList.add('on');
+    state.plan=plan.getAttribute('data-plan');
+    return;
+  }
+
+  // chips
+  const chip=t.closest('.chip');
+  if(chip){
+    const group=chip.parentNode;
+    if(group && group.classList.contains('chips')){
+      if(group.hasAttribute('data-single')){
+        group.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+        chip.classList.add('on');
+      }else{
+        chip.classList.toggle('on');
+      }
+      if(group.getAttribute('data-group')==='studioPet'){
+        const p=petById(chip.dataset.id); if(p) document.getElementById('studioFeat').value=p.appearance||'';
+      }
+      if(group.getAttribute('data-group')==='cardType') fillCard(chip.textContent.trim());
+      if(group.getAttribute('data-group')==='rolePet') fillRoleCard(chip.dataset.id);
+      if(group.getAttribute('data-group')==='feedFactor'){ feedFactor=parseFloat(chip.dataset.f)||1.2; calcFeed(); }
+      if(group.getAttribute('data-group')==='obTags'){
+        const ons=[...group.querySelectorAll('.chip.on')];
+        if(ons.length>2 && chip.classList.contains('on')) chip.classList.remove('on');
+      }
+      return;
+    }
+  }
+
+  // styles (only direct children)
+  const st=t.closest('.styles > div');
+  if(st){
+    const wrap=st.parentNode;
+    wrap.querySelectorAll(':scope > div').forEach(x=>x.classList.remove('on'));
+    st.classList.add('on');
+    if(wrap.id==='studioStyles') selectedStyle=st.getAttribute('data-style')||selectedStyle;
+    if(wrap.id==='resultStyles') resultStyle=st.getAttribute('data-style')||resultStyle;
+    return;
+  }
+
+  const sub=t.closest('[data-sub]');
+  if(sub && sub.parentNode && sub.parentNode.classList.contains('seg')){
+    switchSub(sub, sub.getAttribute('data-sub'));
+    return;
+  }
+});
+
+function switchSub(el,id){
+  if(!el) return;
+  el.parentNode.querySelectorAll('span').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  const target=document.getElementById(id);
+  if(!target) return;
+  const cls=target.classList.contains('sb2')?'sb2':'sb';
+  const root=el.closest('.page')||target.parentNode;
+  root.querySelectorAll('.'+cls).forEach(s=>{ s.style.display = s.id===id?'block':'none'; });
+}
+
+// named buttons
+document.getElementById('obUpload').addEventListener('click',()=>{
+  pickImage(url=>{
+    onboardPhoto=url; onboardUsedSample=false;
+    document.getElementById('obUpload').innerHTML='<img src="'+url+'" alt="预览">已选择照片，将用它来体验定妆<br><small>示例结果仍为演示图</small>';
+    const btn=document.getElementById('obGo2');
+  });
+});
+document.getElementById('obSample').addEventListener('click',()=>{
+  onboardPhoto=null; onboardUsedSample=true; ob(2);
+});
+// after choosing a photo, allow proceeding
+document.getElementById('obUpload').addEventListener('click',()=>{ /* pick handled above */ });
+document.getElementById('ob1').addEventListener('click',e=>{
+  // add a next button dynamically? We'll add proceed if photo set via mutation — simpler: clicking "用示例" or after upload show a button.
+});
+document.getElementById('obNext3').addEventListener('click',()=>ob(3));
+document.getElementById('obDone').addEventListener('click',()=>finishOnboard(false));
+document.getElementById('obShare').addEventListener('click',()=>finishOnboard(true));
+document.getElementById('btnGen').addEventListener('click',doGenerate);
+document.getElementById('btnLock').addEventListener('click',lockStyle);
+document.getElementById('btnStk').addEventListener('click',doStickers);
+document.getElementById('btnSaveStk').addEventListener('click',()=>toast('已保存到相册，可添加到微信表情（示例）'));
+document.getElementById('btnHd').addEventListener('click',()=>{ if(state.vip) toast('已导出高清无水印（演示）'); else paywall(); });
+document.getElementById('btnComic').addEventListener('click',doComic);
+document.getElementById('btnCard').addEventListener('click',()=>{ fillCard(chipVal('cardType')||'生日'); toast('贺卡已生成（示例）'); });
+document.getElementById('btnRole').addEventListener('click',()=>{ const id=document.querySelector('#rolePetChips .chip.on'); fillRoleCard(id&&id.dataset.id); toast('角色卡已生成（示例）'); });
+document.getElementById('btnPublish').addEventListener('click',()=>toast('发布功能即将上线，可先分享到微信'));
+document.getElementById('btnIdPet').addEventListener('click',()=>toast('识别结果：中华田园橘猫（置信度 92%，示例）'));
+document.getElementById('btnToCalc').addEventListener('click',()=>document.getElementById('calc').scrollIntoView({behavior:'smooth'}));
+document.getElementById('btnSymptom').addEventListener('click',()=>toast('症状自查仅供参考，严重时请及时就医'));
+document.getElementById('kg').addEventListener('input',calcFeed);
+document.getElementById('studioUpload').addEventListener('click',()=>pickImage(url=>{
+  studioPhoto=url;
+  document.getElementById('studioUpload').innerHTML='<img src="'+url+'" alt="预览">已选择照片（仅本机预览）<br><small>再点一次可更换</small>';
+}));
+document.getElementById('sameUpload').addEventListener('click',()=>pickImage(url=>sameGen(url)));
+document.getElementById('btnSameSave').addEventListener('click',()=>toast('已为豆豆建好档案，欢迎加入！（示例）'));
+document.getElementById('btnPay').addEventListener('click',()=>fakePay(false));
+document.getElementById('btnPayLater').addEventListener('click',()=>{ unmask(); toast('明天 0 点恢复 3 次免费（演示）'); });
+document.getElementById('wxCancel').addEventListener('click',unmask);
+document.getElementById('wxAllow').addEventListener('click',()=>{ unmask(); state.reminders.wx=true; save(); setTimeout(()=>{ document.getElementById('push').classList.add('on'); setTimeout(()=>document.getElementById('push').classList.remove('on'),5000); },400); toast('已开启微信提醒（演示）'); });
+document.getElementById('cfmNo').addEventListener('click',()=>{ unmask(); confirmCb=null; });
+document.getElementById('cfmYes').addEventListener('click',()=>{ const cb=confirmCb; confirmCb=null; unmask(); if(cb) cb(); });
+
+// event delegation for dynamically rendered buttons
+document.getElementById('body').addEventListener('click',e=>{
+  if(e.target.id==='btnSavePet') savePetFromForm();
+  if(e.target.id==='btnDelPet') deletePet();
+  if(e.target.id==='btnSaveNote') saveNote();
+  if(e.target.id==='btnReset') resetDemo();
+  if(e.target.id==='btnVipPay') fakePay(true);
+  if(e.target.id==='btnWx') mask('wxm');
+  if(e.target.id==='btnReplay'){ hist=[]; show('onboard'); ob(1); }
+  if(e.target.id==='editUpload' || (e.target.closest && e.target.closest('#editUpload'))){
+    pickImage(url=>{
+      const page=document.getElementById('petedit');
+      page._photo=url; page._ai=false;
+      const box=document.getElementById('editAv');
+      if(box) box.innerHTML='<img src="'+url+'" alt="" style="width:72px;height:72px;border-radius:50%;object-fit:cover">';
+    });
+  }
+  if(e.target.id==='jUpload' || (e.target.closest && e.target.closest('#jUpload'))){
+    pickImage(url=>{
+      journalPhoto=url;
+      const up=document.getElementById('jUpload');
+      if(up) up.innerHTML='<img src="'+url+'" alt="预览">已添加照片，再点可更换';
+    });
+  }
+});
+
+// After onboarding photo selected, show continue button
+const obUpload=document.getElementById('obUpload');
+const mo=new MutationObserver(()=>{
+  if(onboardPhoto && !document.getElementById('obGo2')){
+    const b=document.createElement('button');
+    b.className='btn o'; b.id='obGo2'; b.textContent='用这张照片继续';
+    b.onclick=()=>ob(2);
+    obUpload.parentNode.insertBefore(b, document.getElementById('obSample'));
+  }
+});
+mo.observe(obUpload,{childList:true,subtree:true});
+
+document.querySelectorAll('#fseg span').forEach(s=>s.addEventListener('click',()=>{
+  document.querySelectorAll('#fseg span').forEach(x=>x.classList.remove('on'));
+  s.classList.add('on');
+  feedR(s.textContent.trim());
+}));
+
+if(location.search.indexOf('full')>=0) document.body.classList.add('full');
+
+state=loadState();
+calcFeed();
+feedR('推荐');
+fillCard('生日');
+
+const hash=location.hash.slice(1);
+if(hash && document.getElementById(hash)){
+  if(hash!=='onboard') state.onboarded=state.onboarded; // keep
+  show(hash);
+  if(hash==='onboard') { document.getElementById('tab').style.display='none'; ob(1); }
+}else if(!state.onboarded){
+  show('onboard'); ob(1);
+}else{
+  show('home');
+}
+})();
+</script>
+</body>
+</html>
